@@ -1,5 +1,6 @@
 #include "Graphics.h"
-#include "test.h"
+#include "simpleSetup.h"
+
 int main() {
 	generateFile();
 	graphicsTest();

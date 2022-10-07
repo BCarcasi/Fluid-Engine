@@ -45,6 +45,8 @@ namespace jet {
             anim.exportStates(x, y);
 
             anim.exportToFile();
+
+            
         }
 
         return 1;

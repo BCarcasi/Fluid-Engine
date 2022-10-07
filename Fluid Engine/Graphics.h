@@ -31,7 +31,7 @@ namespace {
             return -1;
 
         /* Create a windowed mode window and its OpenGL context */
-        window = glfwCreateWindow(windowWidth, windowHeight, "Hello World", NULL, NULL);
+        window = glfwCreateWindow(windowWidth, windowHeight, "Simple Spring", NULL, NULL);
         if (!window)
         {
             glfwTerminate();
