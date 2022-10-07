@@ -210,7 +210,7 @@ namespace jet {
         _currentTime = _currentFrame.timeInSeconds();
 
         if (_isUsingFixedSubTimeSteps) {
-            JET_INFO << "Using fixed sub-timesteps: " << _numberOfFixedSubTimeSteps;
+            //JET_INFO << "Using fixed sub-timesteps: " << _numberOfFixedSubTimeSteps;
 
             // Perform fixed time-stepping
             const double actualTimeInterval =
@@ -218,20 +218,18 @@ namespace jet {
                 static_cast<double>(_numberOfFixedSubTimeSteps);
 
             for (unsigned int i = 0; i < _numberOfFixedSubTimeSteps; ++i) {
-                JET_INFO << "Begin onAdvanceTimeStep: " << actualTimeInterval
-                    << " (1/" << 1.0 / actualTimeInterval << ") seconds";
+                //JET_INFO << "Begin onAdvanceTimeStep: " << actualTimeInterval << " (1/" << 1.0 / actualTimeInterval << ") seconds";
 
                 Timer timer;
                 onAdvanceTimeStep(actualTimeInterval);
 
-                JET_INFO << "End onAdvanceTimeStep (took "
-                    << timer.durationInSeconds() << " seconds)";
+                //JET_INFO << "End onAdvanceTimeStep (took "<< timer.durationInSeconds() << " seconds)";
 
                 _currentTime += actualTimeInterval;
             }
         }
         else {
-            JET_INFO << "Using adaptive sub-timesteps";
+            //JET_INFO << "Using adaptive sub-timesteps";
 
             // Perform adaptive time-stepping
             double remainingTime = timeIntervalInSeconds;
@@ -240,16 +238,14 @@ namespace jet {
                 double actualTimeInterval =
                     remainingTime / static_cast<double>(numSteps);
 
-                JET_INFO << "Number of remaining sub-timesteps: " << numSteps;
+                //JET_INFO << "Number of remaining sub-timesteps: " << numSteps;
 
-                JET_INFO << "Begin onAdvanceTimeStep: " << actualTimeInterval
-                    << " (1/" << 1.0 / actualTimeInterval << ") seconds";
+                //JET_INFO << "Begin onAdvanceTimeStep: " << actualTimeInterval << " (1/" << 1.0 / actualTimeInterval << ") seconds";
 
                 Timer timer;
                 onAdvanceTimeStep(actualTimeInterval);
 
-                JET_INFO << "End onAdvanceTimeStep (took "
-                    << timer.durationInSeconds() << " seconds)";
+                //JET_INFO << "End onAdvanceTimeStep (took "<< timer.durationInSeconds() << " seconds)";
 
                 remainingTime -= actualTimeInterval;
                 _currentTime += actualTimeInterval;

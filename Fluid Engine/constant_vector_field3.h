@@ -1,10 +1,10 @@
+#pragma once
+
 #ifndef INCLUDE_JET_CONSTANT_VECTOR_FIELD3_H_
 #define INCLUDE_JET_CONSTANT_VECTOR_FIELD3_H_
 
 #include "vector_field3.h"
 #include <memory>
-
-#include "pch+.h"
 #include "private_helpers.h"
 
 namespace jet {
@@ -52,6 +52,7 @@ namespace jet {
         Vector3D _value{ 0, 0, 0 };
     };
 
+
     ConstantVectorField3::ConstantVectorField3(const Vector3D& value) :
         _value(value) {
     }
@@ -90,7 +91,6 @@ namespace jet {
                 delete obj;
             });
     }
-
 }  // namespace jet
 
 #endif  // INCLUDE_JET_CONSTANT_VECTOR_FIELD3_H_

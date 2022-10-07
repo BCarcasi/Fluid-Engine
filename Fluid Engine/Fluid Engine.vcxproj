@@ -77,12 +77,14 @@
     <ClInclude Include="scalar_field3.h" />
     <ClInclude Include="serial.h" />
     <ClInclude Include="serialization.h" />
+    <ClInclude Include="simple_spring.h" />
     <ClInclude Include="size.h" />
     <ClInclude Include="size2.h" />
     <ClInclude Include="size3.h" />
     <ClInclude Include="surface2.h" />
     <ClInclude Include="surface3.h" />
     <ClInclude Include="surface_to_implicit2.h" />
+    <ClInclude Include="test.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="transform2.h" />
@@ -100,7 +102,11 @@
     <ClInclude Include="vector_n.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="Graphics.h" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="simpleSpring.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -188,12 +194,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\benca\Documents\Libraries\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>
       </EntryPointSymbol>
+      <AdditionalLibraryDirectories>C:\Users\benca\Documents\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -204,6 +213,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\benca\Documents\Libraries\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -212,6 +222,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>
       </EntryPointSymbol>
+      <AdditionalLibraryDirectories>C:\Users\benca\Documents\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

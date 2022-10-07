@@ -252,10 +252,22 @@
     <ClInclude Include="constant_vector_field3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="simple_spring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test.cpp">
+    <ClCompile Include="Graphics.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="simpleSpring.txt" />
   </ItemGroup>
 </Project>
