@@ -46,7 +46,7 @@ namespace jet {
         // fixed rate or adaptive, and this function sets which feature should be
         // selected.
         //
-        // \param[in]   isUsing True to enable fixed sub-stepping.
+        //   isUsing True to enable fixed sub-stepping.
         //
         void setIsUsingFixedSubTimeSteps(bool isUsing);
 
@@ -70,7 +70,7 @@ namespace jet {
         // fixed rate or adaptive, and this function sets the number of fixed
         // sub-steps.
         //
-        // \param[in]  numberOfSteps The number of fixed sub-timesteps.
+        //  numberOfSteps The number of fixed sub-timesteps.
         //
         void setNumberOfFixedSubTimeSteps(unsigned int numberOfSteps);
 
@@ -105,7 +105,7 @@ namespace jet {
         // time-step, and a subclass that inherits PhysicsAnimation class should
         // implement this function for its own physics model.
         //
-        // \param[in]  timeIntervalInSeconds The time interval in seconds
+        //  timeIntervalInSeconds The time interval in seconds
         //
         virtual void onAdvanceTimeStep(double timeIntervalInSeconds) = 0;
 
@@ -118,7 +118,7 @@ namespace jet {
         // implement own logic for model specific sub-timestepping for given
         // time interval.
         //
-        // \param[in]  timeIntervalInSeconds The time interval in seconds.
+        //  timeIntervalInSeconds The time interval in seconds.
         //
         // \return     The required number of sub-timesteps.
         //

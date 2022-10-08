@@ -10,7 +10,7 @@ namespace jet {
     //
     //      Returns true if phi is inside the implicit surface (< 0).
     //
-    // \param[in]  phi   The level set value.
+    //  phi   The level set value.
     //
     //     T     Value type.
     //
@@ -28,7 +28,7 @@ namespace jet {
     // will return smooth profile between 0 and 1. Derivative of this function is
     // smearedDeltaSdf.
     //
-    // \param[in]  phi   The level set value.
+    //  phi   The level set value.
     //
     //     T     Value type.
     //
@@ -45,7 +45,7 @@ namespace jet {
     // 1.5, it will also return 0. Between -1.5 and 1.5, the function will return
     // smooth delta function. Integral of this function is smearedHeavisideSdf.
     //
-    // \param[in]  phi   The level set value.
+    //  phi   The level set value.
     //
     //     T     Value type.
     //
@@ -66,8 +66,8 @@ namespace jet {
     // then only one of the points is inside the surface and the function will
     // return a value between 0 and 1.
     //
-    // \param[in]  phi0  The level set value from the first point.
-    // \param[in]  phi1  The level set value from the second point.
+    //  phi0  The level set value from the first point.
+    //  phi1  The level set value from the second point.
     //
     //     T     Value type.
     //

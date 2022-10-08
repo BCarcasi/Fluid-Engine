@@ -25,7 +25,7 @@ namespace jet {
         // Z (or the third) component of the size.
         size_t z;
 
-        // MARK: Constructors
+        // Constructors
 
         // Constructs default size (0, 0, 0).
         constexpr Size3() : x(0), y(0), z(0) {}
@@ -43,7 +43,7 @@ namespace jet {
         // Copy constructor.
         constexpr Size3(const Size3& v) : x(v.x), y(v.y), z(v.z) {}
 
-        // MARK: Basic setters
+        // Basic setters
 
         // Set all x, y, and z components to s.
         void set(size_t s);
@@ -64,7 +64,7 @@ namespace jet {
         // Set both x, y, and z to zero.
         void setZero();
 
-        // MARK: Binary operations: new instance = this (+) v
+        // Binary operations: new instance = this (+) v
 
         // Computes this + (v, v, v).
         Size3 add(size_t v) const;
@@ -89,7 +89,7 @@ namespace jet {
         // Computes this / (v.x, v.y, v.z).
         Size3 div(const Size3& v) const;
 
-        // MARK: Binary operations: new instance = v (+) this
+        // Binary operations: new instance = v (+) this
 
         // Computes (v, v, v) - this.
         Size3 rsub(size_t v) const;
@@ -103,7 +103,7 @@ namespace jet {
         // Computes (v.x, v.y, v.z) / this.
         Size3 rdiv(const Size3& v) const;
 
-        // MARK: Augmented operations: this (+)= v
+        // Augmented operations: this (+)= v
 
         // Computes this += (v, v, v).
         void iadd(size_t v);
@@ -129,7 +129,7 @@ namespace jet {
         // Computes this /= (v.x, v.y, v.z).
         void idiv(const Size3& v);
 
-        // MARK: Basic getters
+        // Basic getters
 
         // Returns const reference to the i -th element of the size.
         const size_t& at(size_t i) const;
@@ -161,7 +161,7 @@ namespace jet {
         // Returns true if other is the same as this size.
         bool isEqual(const Size3& other) const;
 
-        // MARK: Operators
+        // Operators
 
         // Returns reference to the i -th element of the size.
         size_t& operator[](size_t i);

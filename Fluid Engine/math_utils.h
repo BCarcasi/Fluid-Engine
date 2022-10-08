@@ -14,9 +14,9 @@ namespace jet {
     //
     //      Returns true if x and y are similar.
     //
-    // \param[in]  x     The first value.
-    // \param[in]  y     The second value.
-    // \param[in]  eps   The tolerance.
+    //  x     The first value.
+    //  y     The second value.
+    //  eps   The tolerance.
     //
     //     T     Value type.
     //
@@ -28,7 +28,7 @@ namespace jet {
     //
     //      Returns the sign of the value.
     //
-    // \param[in]  x     Input value.
+    //  x     Input value.
     //
     //     T     Value type.
     //
@@ -40,9 +40,9 @@ namespace jet {
     //
     //      Returns the minimum value among three inputs.
     //
-    // \param[in]  x     The first value.
-    // \param[in]  y     The second value.
-    // \param[in]  z     The three value.
+    //  x     The first value.
+    //  y     The second value.
+    //  z     The three value.
     //
     //     T     Value type.
     //
@@ -54,9 +54,9 @@ namespace jet {
     //
     //      Returns the maximum value among three inputs.
     //
-    // \param[in]  x     The first value.
-    // \param[in]  y     The second value.
-    // \param[in]  z     The three value.
+    //  x     The first value.
+    //  y     The second value.
+    //  z     The three value.
     //
     //     T     Value type.
     //
@@ -76,8 +76,8 @@ namespace jet {
     //
     //      Returns the absolute minimum value among the two inputs.
     //
-    // \param[in]  x     The first value.
-    // \param[in]  y     The second value.
+    //  x     The first value.
+    //  y     The second value.
     //
     //     T     Value type.
     //
@@ -89,8 +89,8 @@ namespace jet {
     //
     //      Returns the absolute maximum value among the two inputs.
     //
-    // \param[in]  x     The first value.
-    // \param[in]  y     The second value.
+    //  x     The first value.
+    //  y     The second value.
     //
     //     T     Value type.
     //
@@ -122,7 +122,7 @@ namespace jet {
     //
     //      Returns the square of x.
     //
-    // \param[in]  x     The input.
+    //  x     The input.
     //
     //     T     Value type.
     //
@@ -134,7 +134,7 @@ namespace jet {
     //
     //      Returns the cubic of x.
     //
-    // \param[in]  x     The input.
+    //  x     The input.
     //
     //     T     Value type.
     //
@@ -146,9 +146,9 @@ namespace jet {
     //
     //      Returns the clamped value.
     //
-    // \param[in]  val   The value.
-    // \param[in]  low   The low value.
-    // \param[in]  high  The high value.
+    //  val   The value.
+    //  low   The low value.
+    //  high  The high value.
     //
     //     T     Value type.
     //
@@ -160,7 +160,7 @@ namespace jet {
     //
     //      Converts degrees to radians.
     //
-    // \param[in]  angleInDegrees The angle in degrees.
+    //  angleInDegrees The angle in degrees.
     //
     //     T              Value type.
     //
@@ -172,7 +172,7 @@ namespace jet {
     //
     //      Converts radians to degrees.
     //
-    // \param[in]  angleInDegrees The angle in radians.
+    //  angleInDegrees The angle in radians.
     //
     //     T              Value type.
     //
@@ -184,9 +184,9 @@ namespace jet {
     //
     //      Gets the barycentric coordinate.
     //
-    // \param[in]  x     The input value.
-    // \param[in]  iLow  The lowest index.
-    // \param[in]  iHigh The highest index.
+    //  x     The input value.
+    //  iLow  The lowest index.
+    //  iHigh The highest index.
     //      i     The output index.
     //      t     The offset from i.
     //
@@ -198,9 +198,9 @@ namespace jet {
     //
     //      Computes linear interpolation.
     //
-    // \param[in]  f0    The first value.
-    // \param[in]  f1    The second value.
-    // \param[in]  t     Relative offset [0, 1] from the first value.
+    //  f0    The first value.
+    //  f1    The second value.
+    //  t     Relative offset [0, 1] from the first value.
     //
     //     S     Input value type.
     //     T     Offset type.

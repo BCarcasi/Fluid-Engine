@@ -32,7 +32,7 @@ namespace jet {
         // Z (or the third) component of the vector.
         T z;
 
-        // MARK: Constructors
+        // Constructors
 
         // Constructs default vector (0, 0, 0).
         constexpr Vector() : x(0), y(0), z(0) {}
@@ -50,7 +50,7 @@ namespace jet {
         // Copy constructor.
         constexpr Vector(const Vector& v) : x(v.x), y(v.y), z(v.z) {}
 
-        // MARK: Basic setters
+        // Basic setters
 
         // Set all x, y, and z components to s.
         void set(T s);
@@ -74,7 +74,7 @@ namespace jet {
         // Normalizes this vector.
         void normalize();
 
-        // MARK: Binary operations: new instance = this (+) v
+        // Binary operations: new instance = this (+) v
 
         // Computes this + (v, v, v).
         Vector add(T v) const;
@@ -106,7 +106,7 @@ namespace jet {
         // Computes cross product.
         Vector cross(const Vector& v) const;
 
-        // MARK: Binary operations: new instance = v (+) this
+        // Binary operations: new instance = v (+) this
 
         // Computes (v, v, v) - this.
         Vector rsub(T v) const;
@@ -123,7 +123,7 @@ namespace jet {
         // Computes v cross this.
         Vector rcross(const Vector& v) const;
 
-        // MARK: Augmented operations: this (+)= v
+        // Augmented operations: this (+)= v
 
         // Computes this += (v, v, v).
         void iadd(T v);
@@ -149,7 +149,7 @@ namespace jet {
         // Computes this /= (v.x, v.y, v.z).
         void idiv(const Vector& v);
 
-        // MARK: Basic getters
+        // Basic getters
 
         // Returns const reference to the i -th element of the vector.
         const T& at(size_t i) const;
@@ -216,7 +216,7 @@ namespace jet {
         bool isSimilar(const Vector& other,
             T epsilon = std::numeric_limits<T>::epsilon()) const;
 
-        // MARK: Operators
+        // Operators
 
         // Returns reference to the i -th element of the vector.
         T& operator[](size_t i);
@@ -345,7 +345,7 @@ namespace jet {
     // Double-type 3D vector.
     typedef Vector3<double> Vector3D;
 
-    // MARK: Extensions
+    // Extensions
 
     // Returns float-type zero vector.
     template <>

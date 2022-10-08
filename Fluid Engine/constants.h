@@ -6,7 +6,7 @@
 
 namespace jet {
 
-    // MARK: Zero
+    // Zero
 
     // Zero size_t.
     constexpr size_t kZeroSize = 0;
@@ -32,7 +32,7 @@ namespace jet {
         return 0.0;
     }
 
-    // MARK: One
+    // One
 
     // One size_t.
     constexpr size_t kOneSize = 1;
@@ -58,7 +58,7 @@ namespace jet {
         return 1.0;
     }
 
-    // MARK: Epsilon
+    // Epsilon
 
     // Float-type epsilon.
     constexpr float kEpsilonF = std::numeric_limits<float>::epsilon();
@@ -66,7 +66,7 @@ namespace jet {
     // Double-type epsilon.
     constexpr double kEpsilonD = std::numeric_limits<double>::epsilon();
 
-    // MARK: Max
+    // Max
 
     // Max size_t.
     constexpr size_t kMaxSize = std::numeric_limits<size_t>::max();
@@ -80,7 +80,7 @@ namespace jet {
     // Max double.
     constexpr double kMaxD = std::numeric_limits<double>::max();
 
-    // MARK: Pi
+    // Pi
 
     // Float-type pi.
     constexpr float kPiF = 3.14159265358979323846264338327950288f;
@@ -106,7 +106,7 @@ namespace jet {
         return kPiD;
     }
 
-    // MARK: Pi/2
+    // Pi/2
 
     // Float-type pi/2.
     constexpr float kHalfPiF = 1.57079632679489661923132169163975144f;
@@ -132,7 +132,7 @@ namespace jet {
         return kHalfPiD;
     }
 
-    // MARK: Pi/4
+    // Pi/4
 
     // Float-type pi/4.
     constexpr float kQuarterPiF = 0.785398163397448309615660845819875721f;
@@ -158,7 +158,7 @@ namespace jet {
         return kQuarterPiD;
     }
 
-    // MARK: 2*Pi
+    // 2*Pi
 
     // Float-type 2*pi.
     constexpr float kTwoPiF = static_cast<float>(2.0 * kPiD);
@@ -184,7 +184,7 @@ namespace jet {
         return kTwoPiD;
     }
 
-    // MARK: 4*Pi
+    // 4*Pi
 
     // Float-type 4*pi.
     constexpr float kFourPiF = static_cast<float>(4.0 * kPiD);
@@ -210,7 +210,7 @@ namespace jet {
         return kFourPiD;
     }
 
-    // MARK: 1/Pi
+    // 1/Pi
 
     // Float-type 1/pi.
     constexpr float kInvPiF = static_cast<float>(1.0 / kPiD);
@@ -236,7 +236,7 @@ namespace jet {
         return kInvPiD;
     }
 
-    // MARK: 1/2*Pi
+    // 1/2*Pi
 
     // Float-type 1/2*pi.
     constexpr float kInvTwoPiF = static_cast<float>(0.5 / kPiD);
@@ -262,7 +262,7 @@ namespace jet {
         return kInvTwoPiD;
     }
 
-    // MARK: 1/4*Pi
+    // 1/4*Pi
 
     // Float-type 1/4*pi.
     constexpr float kInvFourPiF = static_cast<float>(0.25 / kPiD);
@@ -288,7 +288,7 @@ namespace jet {
         return kInvFourPiD;
     }
 
-    // MARK: Physics
+    // Physics
 
     // Gravity.
     constexpr double kGravity = -9.8;
@@ -299,7 +299,7 @@ namespace jet {
     // Speed of sound in water at 20 degrees celcius.
     constexpr double kSpeedOfSoundInWater = 1482.0;
 
-    // MARK: Common enums
+    // Common enums
 
     // No direction.
     constexpr int kDirectionNone = 0;

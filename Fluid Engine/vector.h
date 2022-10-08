@@ -52,7 +52,7 @@ namespace jet {
         // Copy constructor.
         Vector(const Vector& other);
 
-        // MARK: Basic setters
+        // Basic setters
 
         // Set vector instance with initializer list.
         template <typename U>
@@ -71,7 +71,7 @@ namespace jet {
         // Normalizes this vector.
         void normalize();
 
-        // MARK: Basic getters
+        // Basic getters
 
         // Returns the size of the vector.
         constexpr size_t size() const;
@@ -160,7 +160,7 @@ namespace jet {
         bool isSimilar(const E& other,
             T epsilon = std::numeric_limits<T>::epsilon()) const;
 
-        // MARK: Binary operations: new instance = this (+) v
+        // Binary operations: new instance = this (+) v
 
         // Computes this + v.
         template <typename E>
@@ -194,7 +194,7 @@ namespace jet {
         template <typename E>
         T dot(const E& v) const;
 
-        // MARK: Binary operations: new instance = v (+) this
+        // Binary operations: new instance = v (+) this
 
         // Computes (s, s, ... , s) - this.
         VectorScalarRSub<T, Vector> rsub(const T& s) const;
@@ -210,7 +210,7 @@ namespace jet {
         template <typename E>
         VectorDiv<T, Vector, E> rdiv(const E& v) const;
 
-        // MARK: Augmented operations: this (+)= v
+        // Augmented operations: this (+)= v
 
         // Computes this += (s, s, ... , s).
         void iadd(const T& s);
@@ -240,7 +240,7 @@ namespace jet {
         template <typename E>
         void idiv(const E& v);
 
-        // MARK: Operators
+        // Operators
 
         //
         // Iterates the vector and invoke given func for each element.

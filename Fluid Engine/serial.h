@@ -15,9 +15,9 @@ namespace jet {
     // This function fills a container specified by begin and end iterators with
     // single thread. The order of the filling is deterministic.
     //
-    // \param[in]  begin          The begin iterator of a container.
-    // \param[in]  end            The end iterator of a container.
-    // \param[in]  value          The value to fill a container.
+    //  begin          The begin iterator of a container.
+    //  end            The end iterator of a container.
+    //  value          The value to fill a container.
     //
     //     RandomIterator Random iterator type.
     //     T              Value type of a container.
@@ -32,9 +32,9 @@ namespace jet {
     // This function makes a for-loop specified by begin and end indices with
     // single thread. The order of the visit is deterministic.
     //
-    // \param[in]  beginIndex The begin index.
-    // \param[in]  endIndex   The end index.
-    // \param[in]  function   The function to call for each index.
+    //  beginIndex The begin index.
+    //  endIndex   The end index.
+    //  function   The function to call for each index.
     //
     //     IndexType  Index type.
     //     Function   Function type.
@@ -50,11 +50,11 @@ namespace jet {
     // for each dimension. X will be the inner-most loop while Y is the outer-most.
     // The order of the visit is deterministic.
     //
-    // \param[in]  beginIndexX The begin index in X dimension.
-    // \param[in]  endIndexX   The end index in X dimension.
-    // \param[in]  beginIndexY The begin index in Y dimension.
-    // \param[in]  endIndexY   The end index in Y dimension.
-    // \param[in]  function    The function to call for each index (i, j).
+    //  beginIndexX The begin index in X dimension.
+    //  endIndexX   The end index in X dimension.
+    //  beginIndexY The begin index in Y dimension.
+    //  endIndexY   The end index in Y dimension.
+    //  function    The function to call for each index (i, j).
     //
     //     IndexType  Index type.
     //     Function   Function type.
@@ -74,13 +74,13 @@ namespace jet {
     // for each dimension. X will be the inner-most loop while Z is the outer-most.
     // The order of the visit is deterministic.
     //
-    // \param[in]  beginIndexX The begin index in X dimension.
-    // \param[in]  endIndexX   The end index in X dimension.
-    // \param[in]  beginIndexY The begin index in Y dimension.
-    // \param[in]  endIndexY   The end index in Y dimension.
-    // \param[in]  beginIndexZ The begin index in Z dimension.
-    // \param[in]  endIndexZ   The end index in Z dimension.
-    // \param[in]  function    The function to call for each index (i, j, k).
+    //  beginIndexX The begin index in X dimension.
+    //  endIndexX   The end index in X dimension.
+    //  beginIndexY The begin index in Y dimension.
+    //  endIndexY   The end index in Y dimension.
+    //  beginIndexZ The begin index in Z dimension.
+    //  endIndexZ   The end index in Z dimension.
+    //  function    The function to call for each index (i, j, k).
     //
     //     IndexType   Index type.
     //     Function    Function type.
@@ -100,8 +100,8 @@ namespace jet {
     //
     // This function sorts a container specified by begin and end iterators.
     //
-    // \param[in]  begin          The begin random access iterator.
-    // \param[in]  end            The end random access iterator.
+    //  begin          The begin random access iterator.
+    //  end            The end random access iterator.
     //
     //     RandomIterator Iterator type.
     //
@@ -115,9 +115,9 @@ namespace jet {
     // takes extra compare function which returns true if the first argument is
     // less than the second argument.
     //
-    // \param[in]  begin           The begin random access iterator.
-    // \param[in]  end             The end random access iterator.
-    // \param[in]  compare         The compare function.
+    //  begin           The begin random access iterator.
+    //  end             The end random access iterator.
+    //  compare         The compare function.
     //
     //     RandomIterator  Iterator type.
     //     CompareFunction Compare function type.

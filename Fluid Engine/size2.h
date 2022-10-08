@@ -22,7 +22,7 @@ namespace jet {
         // Y (or the second) component of the size.
         size_t y;
 
-        // MARK: Constructors
+        // Constructors
 
         // Constructs default size (0, 0).
         constexpr Size2() : x(0), y(0) {}
@@ -37,7 +37,7 @@ namespace jet {
         // Copy constructor.
         constexpr Size2(const Size2& v) : x(v.x), y(v.y) {}
 
-        // MARK: Basic setters
+        // Basic setters
 
         // Set both x and y components to s.
         void set(size_t s);
@@ -55,7 +55,7 @@ namespace jet {
         // Set both x and y to zero.
         void setZero();
 
-        // MARK: Binary operations: new instance = this (+) v
+        // Binary operations: new instance = this (+) v
 
         // Computes this + (v, v).
         Size2 add(size_t v) const;
@@ -81,7 +81,7 @@ namespace jet {
         // Computes this / (v.x, v.y).
         Size2 div(const Size2& v) const;
 
-        // MARK: Binary operations: new instance = v (+) this
+        // Binary operations: new instance = v (+) this
 
         // Computes (v, v) - this.
         Size2 rsub(size_t v) const;
@@ -95,7 +95,7 @@ namespace jet {
         // Computes (v.x, v.y) / this.
         Size2 rdiv(const Size2& v) const;
 
-        // MARK: Augmented operations: this (+)= v
+        // Augmented operations: this (+)= v
 
         // Computes this += (v, v).
         void iadd(size_t v);
@@ -121,7 +121,7 @@ namespace jet {
         // Computes this /= (v.x, v.y).
         void idiv(const Size2& v);
 
-        // MARK: Basic getters
+        // Basic getters
 
         // Returns const reference to the i -th element of the size.
         const size_t& at(size_t i) const;
@@ -153,7 +153,7 @@ namespace jet {
         // Returns true if other is the same as this size.
         bool isEqual(const Size2& other) const;
 
-        // MARK: Operators
+        // Operators
 
         // Returns reference to the i -th element of the size.
         size_t& operator[](size_t i);

@@ -32,7 +32,7 @@ namespace jet {
         // Z (or the third) component of the point.
         T z;
 
-        // MARK: Constructors
+        // Constructors
 
         // Constructs default point (0, 0, 0).
         constexpr Point() : x(0), y(0), z(0) {}
@@ -50,7 +50,7 @@ namespace jet {
         // Copy constructor.
         constexpr Point(const Point& v) : x(v.x), y(v.y), z(v.z) {}
 
-        // MARK: Basic setters
+        // Basic setters
 
         // Set all x, y, and z components to s.
         void set(T s);
@@ -71,7 +71,7 @@ namespace jet {
         // Set both x, y, and z to zero.
         void setZero();
 
-        // MARK: Binary operations: new instance = this (+) v
+        // Binary operations: new instance = this (+) v
 
         // Computes this + (v, v, v).
         Point add(T v) const;
@@ -96,7 +96,7 @@ namespace jet {
         // Computes this / (v.x, v.y, v.z).
         Point div(const Point& v) const;
 
-        // MARK: Binary operations: new instance = v (+) this
+        // Binary operations: new instance = v (+) this
 
         // Computes (v, v, v) - this.
         Point rsub(T v) const;
@@ -110,7 +110,7 @@ namespace jet {
         // Computes (v.x, v.y, v.z) / this.
         Point rdiv(const Point& v) const;
 
-        // MARK: Augmented operations: this (+)= v
+        // Augmented operations: this (+)= v
 
         // Computes this += (v, v, v).
         void iadd(T v);
@@ -136,7 +136,7 @@ namespace jet {
         // Computes this /= (v.x, v.y, v.z).
         void idiv(const Point& v);
 
-        // MARK: Basic getters
+        // Basic getters
 
         // Returns const reference to the i -th element of the point.
         const T& at(size_t i) const;
@@ -172,7 +172,7 @@ namespace jet {
         // Returns true if other is the same as this point.
         bool isEqual(const Point& other) const;
 
-        // MARK: Operators
+        // Operators
 
         // Returns reference to the i -th element of the point.
         T& operator[](size_t i);

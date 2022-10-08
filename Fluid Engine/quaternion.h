@@ -28,7 +28,7 @@ namespace jet {
         //< Imaginary part (k).
         T z;
 
-        // MARK: Constructors
+        // Constructors
 
         // Make an identity quaternion.
         Quaternion();
@@ -58,7 +58,7 @@ namespace jet {
         Quaternion(const Quaternion& other);
 
 
-        // MARK: Basic setters
+        // Basic setters
 
         // Sets the quaternion with other quaternion.
         void set(const Quaternion& other);
@@ -85,7 +85,7 @@ namespace jet {
         void set(const Matrix3x3<T>& matrix);
 
 
-        // MARK: Basic getters
+        // Basic getters
 
         // Returns quaternion with other base type.
         template <typename U>
@@ -95,7 +95,7 @@ namespace jet {
         Quaternion normalized() const;
 
 
-        // MARK: Binary operator methods - new instance = this instance (+) input
+        // Binary operator methods - new instance = this instance (+) input
 
         // Returns this quaternion * vector.
         Vector3<T> mul(const Vector3<T>& v) const;
@@ -107,18 +107,18 @@ namespace jet {
         T dot(const Quaternion<T>& other);
 
 
-        // MARK: Binary operator methods - new instance = input (+) this instance
+        // Binary operator methods - new instance = input (+) this instance
 
         // Returns other quaternion * this quaternion.
         Quaternion rmul(const Quaternion& other) const;
 
-        // MARK: Augmented operator methods - this instance (+)= input
+        // Augmented operator methods - this instance (+)= input
 
         // Returns this quaternion *= other quaternion.
         void imul(const Quaternion& other);
 
 
-        // MARK: Modifiers
+        // Modifiers
 
         // Makes this quaternion identity.
         void setIdentity();
@@ -130,7 +130,7 @@ namespace jet {
         void normalize();
 
 
-        // MARK: Complex getters
+        // Complex getters
 
         // Returns the rotational axis.
         Vector3<T> axis() const;
@@ -154,7 +154,7 @@ namespace jet {
         T l2Norm() const;
 
 
-        // MARK: Setter operators
+        // Setter operators
 
         // Assigns other quaternion.
         Quaternion& operator=(const Quaternion& other);
@@ -163,7 +163,7 @@ namespace jet {
         Quaternion& operator*=(const Quaternion& other);
 
 
-        // MARK: Getter operators
+        // Getter operators
 
         // Returns the reference to the i-th element.
         T& operator[](size_t i);
@@ -178,7 +178,7 @@ namespace jet {
         bool operator!=(const Quaternion& other) const;
 
 
-        // MARK: Builders
+        // Builders
 
         // Returns identity matrix.
         static Quaternion makeIdentity();

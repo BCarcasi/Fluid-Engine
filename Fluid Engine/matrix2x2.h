@@ -27,7 +27,7 @@ namespace jet {
         static_assert(std::is_floating_point<T>::value,
             "Matrix only can be instantiated with floating point types");
 
-        // MARK: Constructors
+        // Constructors
 
         // Constructs identity matrix.
         Matrix();
@@ -66,7 +66,7 @@ namespace jet {
         // \warning Ordering of the input elements is row-major.
         explicit Matrix(const T* arr);
 
-        // MARK: Basic setters
+        // Basic setters
 
         // Sets whole matrix with input scalar.
         void set(T s);
@@ -115,7 +115,7 @@ namespace jet {
         // Sets i-th column with input vector.
         void setColumn(size_t i, const Vector2<T>& col);
 
-        // MARK: Basic getters
+        // Basic getters
 
         // Returns true if this matrix is similar to the input matrix within the
         // given tolerance.
@@ -137,7 +137,7 @@ namespace jet {
         // Returns constant pointer of this matrix.
         const T* data() const;
 
-        // MARK: Binary operator methods - new instance = this instance (+) input
+        // Binary operator methods - new instance = this instance (+) input
         // Returns this matrix + input scalar.
         Matrix add(T s) const;
 
@@ -162,7 +162,7 @@ namespace jet {
         // Returns this matrix / input scalar.
         Matrix div(T s) const;
 
-        // MARK: Binary operator methods - new instance = input (+) this instance
+        // Binary operator methods - new instance = input (+) this instance
         // Returns input scalar + this matrix.
         Matrix radd(T s) const;
 
@@ -184,7 +184,7 @@ namespace jet {
         // Returns input scalar / this matrix.
         Matrix rdiv(T s) const;
 
-        // MARK: Augmented operator methods - this instance (+)= input
+        // Augmented operator methods - this instance (+)= input
         // Adds input scalar to this matrix.
         void iadd(T s);
 
@@ -206,14 +206,14 @@ namespace jet {
         // Divides this matrix with input scalar.
         void idiv(T s);
 
-        // MARK: Modifiers
+        // Modifiers
         // Transposes this matrix.
         void transpose();
 
         // Inverts this matrix.
         void invert();
 
-        // MARK: Complex getters
+        // Complex getters
 
         // Returns sum of all elements.
         T sum() const;
@@ -269,7 +269,7 @@ namespace jet {
         template <typename U>
         Matrix<U, 2, 2> castTo() const;
 
-        // MARK: Setter operators
+        // Setter operators
         // Assigns input matrix.
         Matrix& operator=(const Matrix& m);
 
@@ -294,7 +294,7 @@ namespace jet {
         // Division assignment with input scalar.
         Matrix& operator/=(T s);
 
-        // MARK: Getter operators
+        // Getter operators
         // Returns reference of i-th element.
         T& operator[](size_t i);
 
@@ -313,7 +313,7 @@ namespace jet {
         // Returns true if is not equal to m.
         bool operator!=(const Matrix& m) const;
 
-        // MARK: Helpers
+        // Helpers
         // Sets all matrix entries to zero.
         static Matrix makeZero();
 
@@ -338,7 +338,7 @@ namespace jet {
     template <typename T>
     using Matrix2x2 = Matrix<T, 2, 2>;
 
-    // MARK: Operator overloadings
+    // Operator overloadings
     // Returns a matrix with opposite sign.
     template <typename T>
     Matrix2x2<T> operator-(const Matrix2x2<T>& a);
@@ -429,7 +429,7 @@ namespace jet {
         set(arr);
     }
 
-    // MARK: Basic setters
+    // Basic setters
     template <typename T>
     void Matrix<T, 2, 2>::set(T s) {
         _elements[0] = _elements[1] = _elements[2] = _elements[3] = s;
@@ -496,7 +496,7 @@ namespace jet {
         _elements[j + 2] = col.y;
     }
 
-    // MARK: Basic getters
+    // Basic getters
     template <typename T>
     bool Matrix<T, 2, 2>::isSimilar(const Matrix& m, double tol) const {
         return (std::fabs(_elements[0] - m._elements[0]) < tol) &&
@@ -530,7 +530,7 @@ namespace jet {
         return _elements.data();
     }
 
-    // MARK: Binary operator methods - new instance = this instance (+) input
+    // Binary operator methods - new instance = this instance (+) input
     template <typename T>
     Matrix<T, 2, 2> Matrix<T, 2, 2>::add(T s) const {
         return Matrix(_elements[0] + s, _elements[1] + s, _elements[2] + s,
@@ -582,7 +582,7 @@ namespace jet {
             _elements[3] / s);
     }
 
-    // MARK: Binary operator methods - new instance = input (+) this instance
+    // Binary operator methods - new instance = input (+) this instance
     template <typename T>
     Matrix<T, 2, 2> Matrix<T, 2, 2>::radd(T s) const {
         return Matrix(s + _elements[0], s + _elements[1], s + _elements[2],
@@ -624,7 +624,7 @@ namespace jet {
             s / _elements[3]);
     }
 
-    // MARK: Augmented operator methods - this instance (+)= input
+    // Augmented operator methods - this instance (+)= input
     template <typename T>
     void Matrix<T, 2, 2>::iadd(T s) {
         _elements[0] += s;
@@ -678,7 +678,7 @@ namespace jet {
         _elements[3] /= s;
     }
 
-    // MARK: Modifiers
+    // Modifiers
     template <typename T>
     void Matrix<T, 2, 2>::transpose() {
         std::swap(_elements[1], _elements[2]);
@@ -697,7 +697,7 @@ namespace jet {
         set(m);
     }
 
-    // MARK: Complex getters
+    // Complex getters
     template <typename T>
     T Matrix<T, 2, 2>::sum() const {
         T s = 0;
@@ -802,7 +802,7 @@ namespace jet {
             static_cast<U>(_elements[2]), static_cast<U>(_elements[3]));
     }
 
-    // MARK: Setter operators
+    // Setter operators
     template <typename T>
     Matrix<T, 2, 2>& Matrix<T, 2, 2>::operator=(const Matrix& m) {
         set(m);
@@ -863,7 +863,7 @@ namespace jet {
             _elements[2] != m._elements[2] || _elements[3] != m._elements[3];
     }
 
-    // MARK: Getter operators
+    // Getter operators
     template <typename T>
     T& Matrix<T, 2, 2>::operator[](size_t i) {
         return _elements[i];
@@ -884,7 +884,7 @@ namespace jet {
         return _elements[2 * i + j];
     }
 
-    // MARK: Helpers
+    // Helpers
     template <typename T>
     Matrix<T, 2, 2> Matrix<T, 2, 2>::makeZero() {
         return Matrix(0, 0, 0, 0);
@@ -910,7 +910,7 @@ namespace jet {
         return Matrix(std::cos(rad), -std::sin(rad), std::sin(rad), std::cos(rad));
     }
 
-    // MARK: Operator overloadings
+    // Operator overloadings
     template <typename T>
     Matrix<T, 2, 2> operator-(const Matrix<T, 2, 2>& a) {
         return a.mul(-1);

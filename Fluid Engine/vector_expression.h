@@ -5,7 +5,7 @@
 
 namespace jet {
 
-    // MARK: VectorExpression
+    // VectorExpression
 
     //
     // Base class for vector expression.
@@ -25,7 +25,7 @@ namespace jet {
         const E& operator()() const;
     };
 
-    // MARK: VectorUnaryOp
+    // VectorUnaryOp
 
     //
     // Vector expression for unary operation.
@@ -54,13 +54,13 @@ namespace jet {
         Op _op;
     };
 
-    // MARK: VectorUnaryOp Aliases
+    // VectorUnaryOp Aliases
 
     // Matrix expression for type casting.
     template <typename T, typename E, typename U>
     using VectorTypeCast = VectorUnaryOp<T, E, TypeCast<U, T>>;
 
-    // MARK: VectorBinaryOp
+    // VectorBinaryOp
 
     //
     // Vector expression for binary operation.
@@ -122,7 +122,7 @@ namespace jet {
         Op _op;
     };
 
-    // MARK: VectorBinaryOp Aliases
+    // VectorBinaryOp Aliases
 
     // Vector-vector addition expression.
     template <typename T, typename E1, typename E2>
@@ -164,7 +164,7 @@ namespace jet {
     template <typename T, typename E>
     using VectorScalarRDiv = VectorScalarBinaryOp<T, E, RDivides<T>>;
 
-    // MARK: Global Functions
+    // Global Functions
 
     // Scalar-vector addition operation.
     template <typename T, typename E>
@@ -228,7 +228,7 @@ namespace jet {
         return static_cast<const E&>(*this);
     }
 
-    // MARK: VectorUnaryOp
+    // VectorUnaryOp
 
     template <typename T, typename E, typename Op>
     VectorUnaryOp<T, E, Op>::VectorUnaryOp(const E& u) : _u(u) {}
@@ -243,7 +243,7 @@ namespace jet {
         return _op(_u[i]);
     }
 
-    // MARK: VectorBinaryOp
+    // VectorBinaryOp
 
     template <typename T, typename E1, typename E2, typename Op>
     VectorBinaryOp<T, E1, E2, Op>::VectorBinaryOp(const E1& u, const E2& v)
@@ -275,7 +275,7 @@ namespace jet {
         return _op(_u[i], _v);
     }
 
-    // MARK: Global Functions
+    // Global Functions
 
     template <typename T, typename E>
     VectorScalarAdd<T, E> operator+(const T& a, const VectorExpression<T, E>& b) {

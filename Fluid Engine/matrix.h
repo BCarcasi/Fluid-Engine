@@ -66,7 +66,7 @@ namespace jet {
         // Copy constructor.
         Matrix(const Matrix& other);
 
-        // MARK: Basic setters
+        // Basic setters
 
         // Resizes to m x n matrix with initial value s.
         void resize(size_t m, size_t n, const T& s = T(0));
@@ -111,7 +111,7 @@ namespace jet {
         template <typename E>
         void setColumn(size_t j, const VectorExpression<T, E>& col);
 
-        // MARK: Basic getters
+        // Basic getters
         template <typename E>
         bool isEqual(const MatrixExpression<T, E>& other) const;
 
@@ -151,7 +151,7 @@ namespace jet {
         // Returns the end const iterator of the matrix.
         ConstIterator end() const;
 
-        // MARK: Binary operator methods - new instance = this instance (+) input
+        // Binary operator methods - new instance = this instance (+) input
 
         // Returns this matrix + input scalar.
         MatrixScalarAdd<T, Matrix> add(const T& s) const;
@@ -181,7 +181,7 @@ namespace jet {
         // Returns this matrix / input scalar.
         MatrixScalarDiv<T, Matrix> div(const T& s) const;
 
-        // MARK: Binary operator methods - new instance = input (+) this instance
+        // Binary operator methods - new instance = input (+) this instance
         // Returns input scalar + this matrix.
         MatrixScalarAdd<T, Matrix> radd(const T& s) const;
 
@@ -206,7 +206,7 @@ namespace jet {
         // Returns input matrix / this scalar.
         MatrixScalarRDiv<T, Matrix> rdiv(const T& s) const;
 
-        // MARK: Augmented operator methods - this instance (+)= input
+        // Augmented operator methods - this instance (+)= input
 
         // Adds input scalar to this matrix.
         void iadd(const T& s);
@@ -232,7 +232,7 @@ namespace jet {
         // Divides this matrix with input scalar.
         void idiv(const T& s);
 
-        // MARK: Modifiers
+        // Modifiers
 
         // Transposes this matrix.
         void transpose();
@@ -244,7 +244,7 @@ namespace jet {
         //
         void invert();
 
-        // MARK: Complex getters
+        // Complex getters
         // Returns sum of all elements.
         T sum() const;
 
@@ -297,7 +297,7 @@ namespace jet {
         template <typename U>
         MatrixTypeCast<U, Matrix, T> castTo() const;
 
-        // MARK: Setter operators
+        // Setter operators
 
         // Assigns input matrix.
         template <typename E>
@@ -330,7 +330,7 @@ namespace jet {
         // Division assignment with input scalar.
         Matrix& operator/=(const T& s);
 
-        // MARK: Getter operators
+        // Getter operators
 
         // Returns reference of i-th element.
         T& operator[](size_t i);
@@ -352,7 +352,7 @@ namespace jet {
         template <typename E>
         bool operator!=(const MatrixExpression<T, E>& m) const;
 
-        // MARK: Helpers
+        // Helpers
 
         //
         // Iterates the matrix and invoke given func for each index.
@@ -412,7 +412,7 @@ namespace jet {
         template <typename Callback>
         void forEachIndex(Callback func) const;
 
-        // MARK: Builders
+        // Builders
 
         // Makes a M x N matrix with zeros.
         static MatrixConstant<T> makeZero();

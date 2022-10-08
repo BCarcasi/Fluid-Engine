@@ -6,7 +6,7 @@
 
 namespace jet {
 
-    // MARK: MatrixExpression
+    // MatrixExpression
 
     //
     // Base class for matrix expression.
@@ -92,7 +92,7 @@ namespace jet {
         size_t _m;
     };
 
-    // MARK: MatrixUnaryOp
+    // MatrixUnaryOp
 
     //
     // Matrix expression for unary operation.
@@ -195,13 +195,13 @@ namespace jet {
         bool _isStrict;
     };
 
-    // MARK: MatrixUnaryOp Aliases
+    // MatrixUnaryOp Aliases
 
     // Matrix expression for type casting.
     template <typename T, typename E, typename U>
     using MatrixTypeCast = MatrixUnaryOp<T, E, TypeCast<U, T>>;
 
-    // MARK: MatrixBinaryOp
+    // MatrixBinaryOp
 
     //
     // Matrix expression for binary operation.
@@ -335,7 +335,7 @@ namespace jet {
         const E2& _v;
     };
 
-    // MARK: MatrixBinaryOp Aliases
+    // MatrixBinaryOp Aliases
 
     // Matrix-matrix addition expression.
     template <typename T, typename E1, typename E2>
@@ -369,7 +369,7 @@ namespace jet {
     template <typename T, typename E>
     using MatrixScalarRDiv = MatrixScalarBinaryOp<T, E, RDivides<T>>;
 
-    // MARK: Operator overloadings
+    // Operator overloadings
 
     // Returns a matrix with opposite sign.
     template <typename T, typename E>
@@ -498,7 +498,7 @@ namespace jet {
         return (i == j) ? 1 : 0;
     }
 
-    // MARK: MatrixUnaryOp
+    // MatrixUnaryOp
 
     template <typename T, typename E, typename Op>
     MatrixUnaryOp<T, E, Op>::MatrixUnaryOp(const E& u) : _u(u) {}
@@ -589,7 +589,7 @@ namespace jet {
         }
     }
 
-    // MARK: MatrixBinaryOp
+    // MatrixBinaryOp
 
     template <typename T, typename E1, typename E2, typename Op>
     MatrixBinaryOp<T, E1, E2, Op>::MatrixBinaryOp(const E1& u, const E2& v)
@@ -617,7 +617,7 @@ namespace jet {
         return _op(_u(i, j), _v(i, j));
     }
 
-    // MARK: MatrixScalarBinaryOp
+    // MatrixScalarBinaryOp
 
     template <typename T, typename E, typename Op>
     MatrixScalarBinaryOp<T, E, Op>::MatrixScalarBinaryOp(const E& u, const T& v)
@@ -666,7 +666,7 @@ namespace jet {
         return sum;
     }
 
-    // MARK: MatrixMul
+    // MatrixMul
 
     template <typename T, typename E1, typename E2>
     MatrixMul<T, E1, E2>::MatrixMul(const E1& u, const E2& v) : _u(u), _v(v) {
@@ -699,7 +699,7 @@ namespace jet {
         return sum;
     }
 
-    // MARK: Operator overloadings
+    // Operator overloadings
 
     template <typename T, typename E>
     MatrixScalarMul<T, E> operator-(const MatrixExpression<T, E>& a) {

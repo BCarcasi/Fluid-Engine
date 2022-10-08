@@ -36,7 +36,7 @@ namespace jet {
         // W (or the fourth) component of the vector.
         T w;
 
-        // MARK: Constructors
+        // Constructors
 
         // Constructs default vector (0, 0, 0, 0).
         constexpr Vector() : x(0), y(0), z(0), w(0) {}
@@ -55,7 +55,7 @@ namespace jet {
         // Copy constructor.
         constexpr Vector(const Vector& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
 
-        // MARK: Basic setters
+        // Basic setters
 
         // Set both x, y, z, and w components to s.
         void set(T s);
@@ -79,7 +79,7 @@ namespace jet {
         // Normalizes this vector.
         void normalize();
 
-        // MARK: Binary operations: new instance = this (+) v
+        // Binary operations: new instance = this (+) v
 
         // Computes this + (v, v, v, v).
         Vector add(T v) const;
@@ -108,7 +108,7 @@ namespace jet {
         // Computes dot product.
         T dot(const Vector& v) const;
 
-        // MARK: Binary operations: new instance = v (+) this
+        // Binary operations: new instance = v (+) this
 
         // Computes (v, v, v, v) - this.
         Vector rsub(T v) const;
@@ -122,7 +122,7 @@ namespace jet {
         // Computes (v.x, v.y, v.z, v.w) / this.
         Vector rdiv(const Vector& v) const;
 
-        // MARK: Augmented operations: this (+)= v
+        // Augmented operations: this (+)= v
 
         // Computes this += (v, v, v, v).
         void iadd(T v);
@@ -148,7 +148,7 @@ namespace jet {
         // Computes this /= (v.x, v.y, v.z, v.w).
         void idiv(const Vector& v);
 
-        // MARK: Basic getters
+        // Basic getters
 
         // Returns const reference to the i -th element of the vector.
         const T& at(size_t i) const;
@@ -206,7 +206,7 @@ namespace jet {
         bool isSimilar(const Vector& other,
             T epsilon = std::numeric_limits<T>::epsilon()) const;
 
-        // MARK: Operators
+        // Operators
 
         // Returns reference to the i -th element of the vector.
         T& operator[](size_t i);
@@ -339,7 +339,7 @@ namespace jet {
     // Double-type 4D vector.
     typedef Vector4<double> Vector4D;
 
-    // MARK: Extensions
+    // Extensions
 
     // Returns float-type zero vector.
     template <>
