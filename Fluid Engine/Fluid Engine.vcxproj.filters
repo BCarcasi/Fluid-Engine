@@ -255,7 +255,7 @@
     <ClInclude Include="simple_spring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="test.h">
+    <ClInclude Include="simpleSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

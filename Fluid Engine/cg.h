@@ -8,12 +8,12 @@
 
 namespace jet {
 
-    //!
-    //! \brief No-op preconditioner for conjugate gradient.
-    //!
-    //! This preconditioner does nothing but simply copies the input vector to the
-    //! output vector. Thus, it can be considered as an identity matrix.
-    //!
+    //
+    // No-op preconditioner for conjugate gradient.
+    //
+    // This preconditioner does nothing but simply copies the input vector to the
+    // output vector. Thus, it can be considered as an identity matrix.
+    //
     template <typename BlasType>
     struct NullCgPreconditioner final {
         void build(const typename BlasType::MatrixType&) {}
@@ -25,9 +25,9 @@ namespace jet {
         }
     };
 
-    //!
-    //! \brief Solves conjugate gradient.
-    //!
+    //
+    // Solves conjugate gradient.
+    //
     template <typename BlasType>
     void cg(
         const typename BlasType::MatrixType& A,
@@ -42,9 +42,9 @@ namespace jet {
         unsigned int* lastNumberOfIterations,
         double* lastResidualNorm);
 
-    //!
-    //! \brief Solves pre-conditioned conjugate gradient.
-    //!
+    //
+    // Solves pre-conditioned conjugate gradient.
+    //
     template <
         typename BlasType,
         typename PrecondType>

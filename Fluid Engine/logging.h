@@ -19,8 +19,8 @@
 
 namespace jet {
 
-    //! Level of the logging.
-    //! All < Debug < Info < Warn < Error < Off.
+    // Level of the logging.
+    // All < Debug < Info < Warn < Error < Off.
     enum class LoggingLevel : uint8_t {
         All = 0,
         Debug = 1,
@@ -30,21 +30,21 @@ namespace jet {
         Off = 5
     };
 
-    //!
-    //! \brief Super simple logger implementation.
-    //!
-    //! This is a super simple logger implementation that has minimal logging
-    //! capability. Currently, the class doesn't support multi-thread logging.
-    //!
+    //
+    // Super simple logger implementation.
+    //
+    // This is a super simple logger implementation that has minimal logging
+    // capability. Currently, the class doesn't support multi-thread logging.
+    //
     class Logger final {
     public:
-        //! Constructs a logger with logging level.
+        // Constructs a logger with logging level.
         explicit Logger(LoggingLevel level);
 
-        //! Destructor.
+        // Destructor.
         ~Logger();
 
-        //! Writes a value to the buffer stream.
+        // Writes a value to the buffer stream.
         template <typename T>
         const Logger& operator<<(const T& x) const {
             _buffer << x;
@@ -56,47 +56,47 @@ namespace jet {
         mutable std::stringstream _buffer;
     };
 
-    //! Helper class for logging.
+    // Helper class for logging.
     class Logging {
     public:
-        //! Sets the output stream for the info level logs.
+        // Sets the output stream for the info level logs.
         static void setInfoStream(std::ostream* strm);
 
-        //! Sets the output stream for the warning level logs.
+        // Sets the output stream for the warning level logs.
         static void setWarnStream(std::ostream* strm);
 
-        //! Sets the output stream for the error level logs.
+        // Sets the output stream for the error level logs.
         static void setErrorStream(std::ostream* strm);
 
-        //! Sets the output stream for the debug level logs.
+        // Sets the output stream for the debug level logs.
         static void setDebugStream(std::ostream* strm);
 
-        //! Sets the output stream for all the log levelss.
+        // Sets the output stream for all the log levelss.
         static void setAllStream(std::ostream* strm);
 
-        //! Returns the header string.
+        // Returns the header string.
         static std::string getHeader(LoggingLevel level);
 
-        //! Sets the logging level.
+        // Sets the logging level.
         static void setLevel(LoggingLevel level);
 
-        //! Mutes the logger.
+        // Mutes the logger.
         static void mute();
 
-        //! Un-mutes the logger.
+        // Un-mutes the logger.
         static void unmute();
     };
 
-    //! Info-level logger.
+    // Info-level logger.
     extern Logger infoLogger;
 
-    //! Warn-level logger.
+    // Warn-level logger.
     extern Logger warnLogger;
 
-    //! Error-level logger.
+    // Error-level logger.
     extern Logger errorLogger;
 
-    //! Debug-level logger.
+    // Debug-level logger.
     extern Logger debugLogger;
 
 #define JET_INFO \

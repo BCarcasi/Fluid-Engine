@@ -8,12 +8,12 @@
 
 namespace jet {
 
-    //!
-    //! \brief Generic N-D axis-aligned bounding box class.
-    //!
-    //! \tparam T - Real number type.
-    //! \tparam N - Dimension.
-    //!
+    //
+    // Generic N-D axis-aligned bounding box class.
+    //
+    // T - Real number type.
+    // N - Dimension.
+    //
     template <typename T, size_t N>
     class BoundingBox {
     public:
@@ -22,50 +22,50 @@ namespace jet {
 
         typedef Vector<T, N> VectorType;
 
-        //! Lower corner of the bounding box.
+        // Lower corner of the bounding box.
         VectorType lowerCorner;
 
-        //! Upper corner of the bounding box.
+        // Upper corner of the bounding box.
         VectorType upperCorner;
 
-        //! Default constructor.
+        // Default constructor.
         BoundingBox();
 
-        //! Constructs a box that tightly covers two points.
+        // Constructs a box that tightly covers two points.
         BoundingBox(const VectorType& point1, const VectorType& point2);
 
-        //! Constructs a box with other box instance.
+        // Constructs a box with other box instance.
         BoundingBox(const BoundingBox& other);
 
 
-        //! Returns true of this box and other box overlaps.
+        // Returns true of this box and other box overlaps.
         bool overlaps(const BoundingBox& other) const;
 
-        //! Returns true if the input point is inside of this box.
+        // Returns true if the input point is inside of this box.
         bool contains(const VectorType& point) const;
 
-        //! Returns the mid-point of this box.
+        // Returns the mid-point of this box.
         VectorType midPoint() const;
 
-        //! Returns diagonal length of this box.
+        // Returns diagonal length of this box.
         T diagonalLength() const;
 
-        //! Returns squared diagonal length of this box.
+        // Returns squared diagonal length of this box.
         T diagonalLengthSquared() const;
 
 
-        //! Resets this box to initial state (min=infinite, max=-infinite).
+        // Resets this box to initial state (min=infinite, max=-infinite).
         void reset();
 
-        //! Merges this and other point.
+        // Merges this and other point.
         void merge(const VectorType& point);
 
-        //! Merges this and other boxes.
+        // Merges this and other boxes.
         void merge(const BoundingBox& other);
 
-        //! Expands this box by given delta to all direction.
-        //! If the width of the box was x, expand(y) will result a box with
-        //! x+y+y width.
+        // Expands this box by given delta to all direction.
+        // If the width of the box was x, expand(y) will result a box with
+        // x+y+y width.
         void expand(T delta);
     };
 

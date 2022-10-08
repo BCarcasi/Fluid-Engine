@@ -84,7 +84,7 @@
     <ClInclude Include="surface2.h" />
     <ClInclude Include="surface3.h" />
     <ClInclude Include="surface_to_implicit2.h" />
-    <ClInclude Include="test.h" />
+    <ClInclude Include="simpleSetup.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="transform2.h" />

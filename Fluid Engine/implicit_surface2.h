@@ -6,26 +6,26 @@
 
 namespace jet {
 
-    //! Abstract base class for 2-D implicit surface.
+    // Abstract base class for 2-D implicit surface.
     class ImplicitSurface2 : public Surface2 {
     public:
-        //! Default constructor.
+        // Default constructor.
         ImplicitSurface2(
             const Transform2& transform = Transform2(),
             bool isNormalFlipped = false);
 
-        //! Copy constructor.
+        // Copy constructor.
         ImplicitSurface2(const ImplicitSurface2& other);
 
-        //! Default destructor.
+        // Default destructor.
         virtual ~ImplicitSurface2();
 
-        //! Returns signed distance from the given point \p otherPoint.
+        // Returns signed distance from the given point otherPoint.
         double signedDistance(const Vector2D& otherPoint) const;
 
     protected:
-        //! Returns signed distance from the given point \p otherPoint in local
-        //! space.
+        // Returns signed distance from the given point otherPoint in local
+        // space.
         virtual double signedDistanceLocal(const Vector2D& otherPoint) const = 0;
 
     private:
@@ -34,7 +34,7 @@ namespace jet {
         bool isInsideLocal(const Vector2D& otherPoint) const override;
     };
 
-    //! Shared pointer type for the ImplicitSurface2.
+    // Shared pointer type for the ImplicitSurface2.
     typedef std::shared_ptr<ImplicitSurface2> ImplicitSurface2Ptr;
 
     ImplicitSurface2::ImplicitSurface2(

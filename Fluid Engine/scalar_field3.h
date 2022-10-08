@@ -7,29 +7,29 @@
 
 namespace jet {
 
-    //! Abstract base class for 3-D scalar field.
+    // Abstract base class for 3-D scalar field.
     class ScalarField3 : public Field3 {
     public:
-        //! Default constructor.
+        // Default constructor.
         ScalarField3();
 
-        //! Default destructor.
+        // Default destructor.
         virtual ~ScalarField3();
 
-        //! Returns sampled value at given position \p x.
+        // Returns sampled value at given position x.
         virtual double sample(const Vector3D& x) const = 0;
 
-        //! Returns gradient vector at given position \p x.
+        // Returns gradient vector at given position x.
         virtual Vector3D gradient(const Vector3D& x) const;
 
-        //! Returns Laplacian at given position \p x.
+        // Returns Laplacian at given position x.
         virtual double laplacian(const Vector3D& x) const;
 
-        //! Returns sampler function object.
+        // Returns sampler function object.
         virtual std::function<double(const Vector3D&)> sampler() const;
     };
 
-    //! Shared pointer for the ScalarField3 type.
+    // Shared pointer for the ScalarField3 type.
     typedef std::shared_ptr<ScalarField3> ScalarField3Ptr;
 
     ScalarField3::ScalarField3() {

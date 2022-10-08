@@ -20,7 +20,7 @@
 
 namespace jet {
 
-    //! Execution policy tag.
+    // Execution policy tag.
     enum class ExecutionPolicy { kSerial, kParallel };
 
     
@@ -90,10 +90,10 @@ namespace jet {
         CompareFunction compare,
         ExecutionPolicy policy = ExecutionPolicy::kParallel);
 
-    //! Sets maximum number of threads to use.
+    // Sets maximum number of threads to use.
     void setMaxNumberOfThreads(unsigned int numThreads);
 
-    //! Returns maximum number of threads to use.
+    // Returns maximum number of threads to use.
     unsigned int maxNumberOfThreads();
 
 

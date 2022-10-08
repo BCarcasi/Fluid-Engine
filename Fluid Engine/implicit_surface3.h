@@ -6,26 +6,26 @@
 
 namespace jet {
 
-    //! Abstract base class for 3-D implicit surface.
+    // Abstract base class for 3-D implicit surface.
     class ImplicitSurface3 : public Surface3 {
     public:
-        //! Default constructor.
+        // Default constructor.
         ImplicitSurface3(
             const Transform3& transform = Transform3(),
             bool isNormalFlipped = false);
 
-        //! Copy constructor.
+        // Copy constructor.
         ImplicitSurface3(const ImplicitSurface3& other);
 
-        //! Default destructor.
+        // Default destructor.
         virtual ~ImplicitSurface3();
 
-        //! Returns signed distance from the given point \p otherPoint.
+        // Returns signed distance from the given point otherPoint.
         double signedDistance(const Vector3D& otherPoint) const;
 
     protected:
-        //! Returns signed distance from the given point \p otherPoint in local
-        //! space.
+        // Returns signed distance from the given point otherPoint in local
+        // space.
         virtual double signedDistanceLocal(const Vector3D& otherPoint) const = 0;
 
     private:
@@ -34,7 +34,7 @@ namespace jet {
         bool isInsideLocal(const Vector3D& otherPoint) const override;
     };
 
-    //! Shared pointer type for the ImplicitSurface3.
+    // Shared pointer type for the ImplicitSurface3.
     typedef std::shared_ptr<ImplicitSurface3> ImplicitSurface3Ptr;
 
     ImplicitSurface3::ImplicitSurface3(

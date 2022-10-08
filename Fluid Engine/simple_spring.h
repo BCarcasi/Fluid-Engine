@@ -122,6 +122,7 @@ public:
     }
 
 protected:
+
     void onAdvanceTimeStep(double timeIntervalInSeconds) override
     {
         size_t numberOfPoints = positions.size();

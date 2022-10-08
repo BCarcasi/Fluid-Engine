@@ -6,41 +6,41 @@
 
 namespace jet {
 
-    //!
-    //! \brief 2-D implicit surface wrapper for generic Surface2 instance.
-    //!
-    //! This class represents 2-D implicit surface that converts Surface2 instance
-    //! to an ImplicitSurface2 object. The conversion is made by evaluating closest
-    //! point and normal from a given point for the given (explicit) surface. Thus,
-    //! this conversion won't work for every single surfaces. Use this class only
-    //! for the basic primitives such as Sphere2 or Box2.
-    //!
+    //
+    // 2-D implicit surface wrapper for generic Surface2 instance.
+    //
+    // This class represents 2-D implicit surface that converts Surface2 instance
+    // to an ImplicitSurface2 object. The conversion is made by evaluating closest
+    // point and normal from a given point for the given (explicit) surface. Thus,
+    // this conversion won't work for every single surfaces. Use this class only
+    // for the basic primitives such as Sphere2 or Box2.
+    //
     class SurfaceToImplicit2 final : public ImplicitSurface2 {
     public:
         class Builder;
 
-        //! Constructs an instance with generic Surface2 instance.
+        // Constructs an instance with generic Surface2 instance.
         SurfaceToImplicit2(
             const Surface2Ptr& surface,
             const Transform2& transform = Transform2(),
             bool isNormalFlipped = false);
 
-        //! Copy constructor.
+        // Copy constructor.
         SurfaceToImplicit2(const SurfaceToImplicit2& other);
 
-        //! Updates internal spatial query engine.
+        // Updates internal spatial query engine.
         void updateQueryEngine() override;
 
-        //! Returns true if bounding box can be defined.
+        // Returns true if bounding box can be defined.
         bool isBounded() const override;
 
-        //! Returns true if the surface is a valid geometry.
+        // Returns true if the surface is a valid geometry.
         bool isValidGeometry() const override;
 
-        //! Returns the raw surface instance.
+        // Returns the raw surface instance.
         Surface2Ptr surface() const;
 
-        //! Returns builder fox SurfaceToImplicit2.
+        // Returns builder fox SurfaceToImplicit2.
         static Builder builder();
 
     protected:
@@ -66,23 +66,23 @@ namespace jet {
         Surface2Ptr _surface;
     };
 
-    //! Shared pointer for the SurfaceToImplicit2 type.
+    // Shared pointer for the SurfaceToImplicit2 type.
     typedef std::shared_ptr<SurfaceToImplicit2> SurfaceToImplicit2Ptr;
 
 
-    //!
-    //! \brief Front-end to create SurfaceToImplicit2 objects step by step.
-    //!
+    //
+    // Front-end to create SurfaceToImplicit2 objects step by step.
+    //
     class SurfaceToImplicit2::Builder final
         : public SurfaceBuilderBase2<SurfaceToImplicit2::Builder> {
     public:
-        //! Returns builder with surface.
+        // Returns builder with surface.
         Builder& withSurface(const Surface2Ptr& surface);
 
-        //! Builds SurfaceToImplicit2.
+        // Builds SurfaceToImplicit2.
         SurfaceToImplicit2 build() const;
 
-        //! Builds shared pointer of SurfaceToImplicit2 instance.
+        // Builds shared pointer of SurfaceToImplicit2 instance.
         SurfaceToImplicit2Ptr makeShared() const;
 
     private:

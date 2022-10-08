@@ -5,16 +5,16 @@
 
 namespace jet {
 
-    //! Simple timer class.
+    // Simple timer class.
     class Timer {
     public:
-        //! Constructs the timer and start ticking.
+        // Constructs the timer and start ticking.
         Timer();
 
-        //! Returns the time duration since the creation or reset in seconds.
+        // Returns the time duration since the creation or reset in seconds.
         double durationInSeconds() const;
 
-        //! Resets the timer.
+        // Resets the timer.
         void reset();
 
     private:

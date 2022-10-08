@@ -10,51 +10,51 @@
 
 namespace jet {
 
-    //!
-    //! \brief Represents 3-D rigid body transform.
-    //!
+    //
+    // Represents 3-D rigid body transform.
+    //
     class Transform3 {
     public:
-        //! Constructs identity transform.
+        // Constructs identity transform.
         Transform3();
 
-        //! Constructs a transform with translation and orientation.
+        // Constructs a transform with translation and orientation.
         Transform3(const Vector3D& translation, const QuaternionD& orientation);
 
-        //! Returns the translation.
+        // Returns the translation.
         const Vector3D& translation() const;
 
-        //! Sets the traslation.
+        // Sets the traslation.
         void setTranslation(const Vector3D& translation);
 
-        //! Returns the orientation.
+        // Returns the orientation.
         const QuaternionD& orientation() const;
 
-        //! Sets the orientation.
+        // Sets the orientation.
         void setOrientation(const QuaternionD& orientation);
 
-        //! Transforms a point in world coordinate to the local frame.
+        // Transforms a point in world coordinate to the local frame.
         Vector3D toLocal(const Vector3D& pointInWorld) const;
 
-        //! Transforms a direction in world coordinate to the local frame.
+        // Transforms a direction in world coordinate to the local frame.
         Vector3D toLocalDirection(const Vector3D& dirInWorld) const;
 
-        //! Transforms a ray in world coordinate to the local frame.
+        // Transforms a ray in world coordinate to the local frame.
         Ray3D toLocal(const Ray3D& rayInWorld) const;
 
-        //! Transforms a bounding box in world coordinate to the local frame.
+        // Transforms a bounding box in world coordinate to the local frame.
         BoundingBox3D toLocal(const BoundingBox3D& bboxInWorld) const;
 
-        //! Transforms a point in local space to the world coordinate.
+        // Transforms a point in local space to the world coordinate.
         Vector3D toWorld(const Vector3D& pointInLocal) const;
 
-        //! Transforms a direction in local space to the world coordinate.
+        // Transforms a direction in local space to the world coordinate.
         Vector3D toWorldDirection(const Vector3D& dirInLocal) const;
 
-        //! Transforms a ray in local space to the world coordinate.
+        // Transforms a ray in local space to the world coordinate.
         Ray3D toWorld(const Ray3D& rayInLocal) const;
 
-        //! Transforms a bounding box in local space to the world coordinate.
+        // Transforms a bounding box in local space to the world coordinate.
         BoundingBox3D toWorld(const BoundingBox3D& bboxInLocal) const;
 
     private:
