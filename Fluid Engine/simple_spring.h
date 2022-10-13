@@ -99,6 +99,8 @@ public:
     }
 
     void exportToFile() const {
+
+
         std::ofstream outfile;
         outfile.open(fileName, std::fstream::out | std::ofstream::app);
         for (int i = 1; i < positions.size(); i++) {
