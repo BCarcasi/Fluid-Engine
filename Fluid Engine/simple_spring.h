@@ -84,6 +84,7 @@ public:
         }
     }
 
+    
     void openFile(const char* fileName, std::string initString = "") {
         this->fileName = fileName;
         std::ofstream outfile;
@@ -122,6 +123,8 @@ public:
         outfile.close();
 
     }
+
+    
 
 protected:
 

@@ -330,7 +330,7 @@ namespace jet {
     template <typename T>
     Vector3<T> clamp(const Vector3<T>& v, const Vector3<T>& low,
         const Vector3<T>& high);
-
+    
     // Returns element-wise ceiled vector.
     template <typename T>
     Vector3<T> ceil(const Vector3<T>& a);

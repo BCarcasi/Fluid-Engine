@@ -255,9 +255,6 @@
     <ClInclude Include="simpleSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="manual_tests.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics.h">

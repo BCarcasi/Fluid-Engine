@@ -23,13 +23,13 @@ namespace jet {
         std::cin >> windX;
         std::cout << "set the wind in the y direction: ";
         std::cin >> windY;
-        
+
 
 
 
         Array1<double> x;
         Array1<double> y;
-        
+
 
         SimpleMassSpringAnimation anim;
         anim.makeChain(springs);
@@ -47,7 +47,7 @@ namespace jet {
 
             anim.exportToFile();
 
-            
+
         }
 
         return 1;

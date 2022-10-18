@@ -55,7 +55,6 @@
     <ClInclude Include="level_set_utils.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="macros.h" />
-    <ClInclude Include="manual_tests.h" />
     <ClInclude Include="math_utils.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="matrix2x2.h" />
@@ -78,6 +77,7 @@
     <ClInclude Include="scalar_field3.h" />
     <ClInclude Include="serial.h" />
     <ClInclude Include="serialization.h" />
+    <ClInclude Include="simpleSetup.h" />
     <ClInclude Include="simple_spring.h" />
     <ClInclude Include="size.h" />
     <ClInclude Include="size2.h" />
@@ -85,7 +85,6 @@
     <ClInclude Include="surface2.h" />
     <ClInclude Include="surface3.h" />
     <ClInclude Include="surface_to_implicit2.h" />
-    <ClInclude Include="simpleSetup.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="transform2.h" />
