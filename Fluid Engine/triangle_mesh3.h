@@ -806,8 +806,10 @@ namespace jet {
         std::vector<tinyobj::shape_t> shapes;
         std::vector<tinyobj::material_t> materials;
         std::string err;
+        std::string warn;
 
-        const bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &err, strm);
+
+        const bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, strm);
 
         // `err` may contain warning message.
         if (!err.empty()) {
