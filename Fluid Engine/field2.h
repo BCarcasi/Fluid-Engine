@@ -2,6 +2,7 @@
 #define INCLUDE_JET_FIELD2_H_
 
 #include <memory>
+#include "pch.h"
 
 namespace jet {
 
@@ -15,6 +16,12 @@ namespace jet {
 
     typedef std::shared_ptr<Field2> Field2Ptr;
 
+    Field2::Field2() {
+    }
+
+    Field2::~Field2() {
+    }
+    
 }  // namespace jet
 
 #endif  // INCLUDE_JET_FIELD2_H_
