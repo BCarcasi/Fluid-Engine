@@ -1,3 +1,5 @@
+
+
 #include "jet.h"
 #include <pystring/pystring.h>
 
@@ -30,7 +32,7 @@ void saveParticleAsPos(const ParticleSystemData3Ptr& particles,
     std::string filename = pystring::os::path::join(rootDir, basename);
     std::ofstream file(filename.c_str(), std::ios::binary);
     if (file) {
-        printf("Writing %s...\n", filename.c_str());
+        printf("Writing %s\n", filename.c_str());
         std::vector<uint8_t> buffer;
         serialize(positions.constAccessor(), &buffer);
         file.write(reinterpret_cast<char*>(buffer.data()), buffer.size());
@@ -48,7 +50,7 @@ void saveParticleAsXyz(const ParticleSystemData3Ptr& particles,
     std::string filename = pystring::os::path::join(rootDir, basename);
     std::ofstream file(filename.c_str());
     if (file) {
-        printf("Writing %s...\n", filename.c_str());
+        printf("Writing %s\n", filename.c_str());
         for (const auto& pt : positions) {
             file << pt.x << ' ' << pt.y << ' ' << pt.z << std::endl;
         }
@@ -191,14 +193,97 @@ void runExample2(const std::string& rootDir, double targetSpacing,
     runSimulation(rootDir, solver, numberOfFrames, format, fps);
 }
 
+void runExample3(const std::string& rootDir, double targetSpacing,
+    int numberOfFrames, const std::string& format, double fps) {
+    BoundingBox3D domain(Vector3D(), Vector3D(3, 2, 1.5));
+    double lz = domain.depth();
+
+    // Build solver
+    auto solver = PciSphSolver3::builder()
+        .withTargetDensity(1000.0)
+        .withTargetSpacing(targetSpacing)
+        .makeShared();
+
+    solver->setPseudoViscosityCoefficient(0.0);
+    solver->setTimeStepLimitScale(10.0);
+
+    // Build emitter
+    BoundingBox3D sourceBound(domain);
+    sourceBound.expand(-targetSpacing);
+
+    auto box1 =
+        Box3::builder()
+        .withLowerCorner({ 0, 0, 0 })
+        .withUpperCorner({ 0.5 + 0.001, 0.75 + 0.001, 0.75 * lz + 0.001 })
+        .makeShared();
+
+    auto box2 =
+        Box3::builder()
+        .withLowerCorner({ 2.5 - 0.001, 0, 0.25 * lz - 0.001 })
+        .withUpperCorner({ 3.5 + 0.001, 0.75 + 0.001, 1.5 * lz + 0.001 })
+        .makeShared();
+
+    auto boxSet = ImplicitSurfaceSet3::builder()
+        .withExplicitSurfaces({ box1, box2 })
+        .makeShared();
+
+    auto emitter = VolumeParticleEmitter3::builder()
+        .withSurface(boxSet)
+        .withMaxRegion(sourceBound)
+        .withSpacing(targetSpacing)
+        .makeShared();
+
+    solver->setEmitter(emitter);
+
+    // Build collider
+    auto cyl1 = Cylinder3::builder()
+        .withCenter({ 1, 0.375, 0.375 })
+        .withRadius(0.1)
+        .withHeight(0.75)
+        .makeShared();
+
+    auto cyl2 = Cylinder3::builder()
+        .withCenter({ 1.5, 0.375, 0.75 })
+        .withRadius(0.1)
+        .withHeight(0.75)
+        .makeShared();
+
+    auto cyl3 = Cylinder3::builder()
+        .withCenter({ 2, 0.375, 1.125 })
+        .withRadius(0.1)
+        .withHeight(0.75)
+        .makeShared();
+
+    auto box = Box3::builder()
+        .withIsNormalFlipped(true)
+        .withBoundingBox(domain)
+        .makeShared();
+
+    auto surfaceSet = ImplicitSurfaceSet3::builder()
+        .withExplicitSurfaces({ cyl1, cyl2, cyl3, box })
+        .makeShared();
+
+    auto collider =
+        RigidBodyCollider3::builder().withSurface(surfaceSet).makeShared();
+
+    solver->setCollider(collider);
+
+    // Print simulation info
+    printf("Running example 3 (dam-breaking with PCISPH)\n");
+    printInfo(solver);
+
+    // Run simulation
+    runSimulation(rootDir, solver, numberOfFrames, format, fps);
+}
+
 int main(int argc, char* argv[]) {
     bool showHelp = false;
     double targetSpacing = 0.02;
     int numberOfFrames = 100;
     double fps = 60.0;
-    int exampleNum = 1;
+    int exampleNum = 3;
     std::string logFilename = APP_NAME ".log";
-    std::string outputDir = APP_NAME "_output";
+    std::string outputDir = APP_NAME "_output3";
     std::string format = "xyz";
 
     // Parsing
@@ -247,6 +332,9 @@ int main(int argc, char* argv[]) {
         break;
     case 2:
         runExample2(outputDir, targetSpacing, numberOfFrames, format, fps);
+        break;
+    case 3:
+        runExample3(outputDir, targetSpacing, numberOfFrames, format, fps);
         break;
     default:
         std::cout << toString(parser) << '\n';

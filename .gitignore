@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Fluid Engine/processed
+/Fluid Engine/processed1
+/Fluid Engine/processed2
+/Fluid Engine/processed3
+/Fluid Engine/sph_sim_output
+/Fluid Engine/sph_sim_output2
+/Fluid Engine/sph_sim_output3
+*.mp4

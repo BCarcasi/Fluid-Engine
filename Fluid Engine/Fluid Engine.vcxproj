@@ -39,6 +39,7 @@
     <ClInclude Include="bounding_box.h" />
     <ClInclude Include="bounding_box2.h" />
     <ClInclude Include="bounding_box3.h" />
+    <ClInclude Include="box2.h" />
     <ClInclude Include="box3.h" />
     <ClInclude Include="buffer_base.h" />
     <ClInclude Include="bvh3.h" />
@@ -58,6 +59,7 @@
     <ClInclude Include="custom_implicit_surface3.h" />
     <ClInclude Include="custom_scalar_field3.h" />
     <ClInclude Include="custom_vector_field3.h" />
+    <ClInclude Include="cylinder3.h" />
     <ClInclude Include="face_centered_grid2.h" />
     <ClInclude Include="face_centered_grid3.h" />
     <ClInclude Include="factory.h" />
@@ -101,6 +103,7 @@
     <ClInclude Include="physics_animation.h" />
     <ClInclude Include="physics_helpers.h" />
     <ClInclude Include="pic_solver3.h" />
+    <ClInclude Include="plane2.h" />
     <ClInclude Include="plane3.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="point2.h" />
@@ -278,7 +281,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\benca\Documents\Libraries\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -298,7 +301,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\benca\Documents\Libraries\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

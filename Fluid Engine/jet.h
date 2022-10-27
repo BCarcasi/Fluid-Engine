@@ -32,6 +32,7 @@
 #include "constants.h"
 #include "custom_implicit_surface3.h"
 #include "custom_scalar_field3.h"
+#include "cylinder3.h"
 #include "face_centered_grid2.h"
 #include "face_centered_grid3.h"
 #include "fdm_utils.h"
