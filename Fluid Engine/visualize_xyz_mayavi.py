@@ -38,5 +38,5 @@ for i,f in enumerate(files):
     mlab.plot3d([CUBE_MAX,CUBE_MAX],[CUBE_MAX/2,CUBE_MAX/2],[0.0,CUBE_MAX], color=(0,0,0), tube_radius=None, figure=fig)
 
     mlab.view(azimuth=50, elevation=80, focalpoint=[1, 0.2, 1.1], distance=8.0, figure=fig)
-    mlab.savefig(filename=outpath + '/out-%02d.png' % i)
+    mlab.savefig(filename=outpath + '/out-%02d.png' % i, size=(2000, 2000))
     mlab.clf()

@@ -1,345 +1,249 @@
 
-
-#include "jet.h"
 #include <pystring/pystring.h>
+#include <cmath>
+#include <gl/glew.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#include <gl/GLUT.h>
 
-#ifdef JET_WINDOWS
-#include <direct.h>
-#else
-#include <sys/stat.h>
-#endif
 
-#include "clara_utils.h"
-#include "clara.h"
-
-#include <algorithm>
-#include <fstream>
 #include <iostream>
-#include <string>
 #include <vector>
+
+#include "constants.h"
+#include <fstream>
+#include "xyz_extractor.h"
+#include <algorithm>
 
 #define APP_NAME "sph_sim"
 
-using namespace jet;
+// angle of rotation for the camera direction
+float angle = 0.0;
+float angleY = 0.0;
+// actual vector representing the camera's direction
+float lx = 0.0f, lz = -1.0f, ly = 0.0f, dis = 10.0f;
+// XZ position of the camera
+float camX = 0.0f, camY = 1.0f, z = 5.0f;
 
-void saveParticleAsPos(const ParticleSystemData3Ptr& particles,
-    const std::string& rootDir, int frameCnt) {
-    Array1<Vector3D> positions(particles->numberOfParticles());
-    copyRange1(particles->positions(), particles->numberOfParticles(),
-        &positions);
-    char basename[256];
-    snprintf(basename, sizeof(basename), "frame_%06d.pos", frameCnt);
-    std::string filename = pystring::os::path::join(rootDir, basename);
-    std::ofstream file(filename.c_str(), std::ios::binary);
-    if (file) {
-        printf("Writing %s\n", filename.c_str());
-        std::vector<uint8_t> buffer;
-        serialize(positions.constAccessor(), &buffer);
-        file.write(reinterpret_cast<char*>(buffer.data()), buffer.size());
-        file.close();
-    }
+int numberOfPoints = 0, frame = 0, count = 0, framesBetweenSwitch = 4;
+
+
+
+jet::Coordinates loadXYZFromFile(const std::string& rootDir, int frameCnt) {
+	char basename[256];
+	snprintf(basename, sizeof(basename), "frame_%06d.xyz", frameCnt);
+	std::string filename = pystring::os::path::join(rootDir, basename);
+	std::fstream file(filename.c_str());
+	jet::Coordinates coordinates;
+	if (file) {
+		file >> coordinates;
+		file.close();
+	}
+	return coordinates;
 }
 
-void saveParticleAsXyz(const ParticleSystemData3Ptr& particles,
-    const std::string& rootDir, int frameCnt) {
-    Array1<Vector3D> positions(particles->numberOfParticles());
-    copyRange1(particles->positions(), particles->numberOfParticles(),
-        &positions);
-    char basename[256];
-    snprintf(basename, sizeof(basename), "frame_%06d.xyz", frameCnt);
-    std::string filename = pystring::os::path::join(rootDir, basename);
-    std::ofstream file(filename.c_str());
-    if (file) {
-        printf("Writing %s\n", filename.c_str());
-        for (const auto& pt : positions) {
-            file << pt.x << ' ' << pt.y << ' ' << pt.z << std::endl;
-        }
-        file.close();
-    }
+std::vector<jet::point3> Vertices;
+
+struct Point
+{
+	float x, y, z;
+	unsigned char r, g, b, a;
+};
+std::vector< Point > points;
+std::vector<std::vector<Point>> arrayOfPoints;
+
+
+
+void changeSize(int w, int h) {
+
+	// Prevent a divide by zero, when window is too short
+	// (you cant make a window of zero width).
+	if (h == 0)
+		h = 1;
+	float ratio = w * 1.0 / h;
+
+	// Use the Projection Matrix
+	glMatrixMode(GL_PROJECTION);
+
+	// Reset Matrix
+	glLoadIdentity();
+
+	// Set the viewport to be the entire window
+	glViewport(0, 0, w, h);
+
+	// Set the correct perspective.
+	gluPerspective(45.0f, ratio, 0.1f, 100.0f);
+
+	// Get Back to the Modelview
+	glMatrixMode(GL_MODELVIEW);
 }
 
-void printInfo(const SphSolver3Ptr& solver) {
-    auto particles = solver->sphSystemData();
-    printf("Number of particles: %zu\n", particles->numberOfParticles());
+void processNormalKeys(unsigned char key, int x, int y) {
+
+	if (key == 27)
+		exit(0);
+	if (key == 'e' && dis > 0.1)
+		dis -= 0.1f;
+	if (key == 'q')
+		dis += 0.1f;
+	if (key == 'w') {
+		camX += sin(angle)*0.2f;
+		z -= cos(angle)*0.2f;
+	}
+	if (key == 'a') {
+		camX -= cos(angle) * 0.2f;
+		z -= sin(angle) * 0.2f;
+	}
+	if (key == 's') {
+		camX -= sin(angle) * 0.2f;
+		z += cos(angle) * 0.2f;
+	}
+	if (key == 'd') {
+		camX += cos(angle) * 0.2f;
+		z += sin(angle) * 0.2f;
+	}
+	if (key == 'z') camY += 0.2f;
+	if (key == 'x') camY -= 0.2f;
+	if (key == 'k') framesBetweenSwitch -= 1;
+	if (key == 'j') framesBetweenSwitch += 1;
+		
 }
 
-void runSimulation(const std::string& rootDir, const SphSolver3Ptr& solver,
-    int numberOfFrames, const std::string& format, double fps) {
-    auto particles = solver->sphSystemData();
+void renderScene(void) {
 
-    for (Frame frame(0, 1.0 / fps); frame.index < numberOfFrames; ++frame) {
-        solver->update(frame);
-        if (format == "xyz") {
-            saveParticleAsXyz(particles, rootDir, frame.index);
-        }
-        else if (format == "pos") {
-            saveParticleAsPos(particles, rootDir, frame.index);
-        }
-    }
+	// Clear Color and Depth Buffers
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// Reset transformations
+	glLoadIdentity();
+	// Set the camera
+	gluLookAt(camX - lx * dis, camY - ly * dis, z - lz * dis,
+		camX, camY, z,
+		0.0f, 1.0f, 0.0f);
+
+	// Draw ground
+	glColor3f(0.9f, 0.9f, 0.9f);
+	glBegin(GL_QUADS);
+	glVertex3f(-100.0f, 0.0f, -100.0f);
+	glVertex3f(-100.0f, 0.0f, 100.0f);
+	glVertex3f(100.0f, 0.0f, 100.0f);
+	glVertex3f(100.0f, 0.0f, -100.0f);
+	glEnd();
+
+
+	points = arrayOfPoints.at(frame);
+
+
+	glColor3ub(255, 255, 255);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(3, GL_FLOAT, sizeof(Point), &points[0].x);
+	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Point), &points[0].r);
+	glPointSize(2.0);
+	glDrawArrays(GL_POINTS, 0, points.size());
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+
+	glFlush();
+
+	glutSwapBuffers();
+	if (count == 3){
+		frame = (frame + 1) % 100;
+	}
+	count = (count + 1) % framesBetweenSwitch;
 }
 
-// Water-drop example (PCISPH)
-void runExample1(const std::string& rootDir, double targetSpacing,
-    int numberOfFrames, const std::string& format, double fps) {
-    BoundingBox3D domain(Vector3D(), Vector3D(1, 2, 1));
+void processSpecialKeys(int key, int xx, int yy) {
 
-    // Build solver
-    auto solver = PciSphSolver3::builder()
-        .withTargetDensity(1000.0)
-        .withTargetSpacing(targetSpacing)
-        .makeShared();
+	float fraction = 0.1f;
 
-    solver->setPseudoViscosityCoefficient(0.0);
-
-    // Build emitter
-    BoundingBox3D sourceBound(domain);
-    sourceBound.expand(-targetSpacing);
-
-    auto plane = Plane3::builder()
-        .withNormal({ 0, 1, 0 })
-        .withPoint({ 0, 0.25 * domain.height(), 0 })
-        .makeShared();
-
-    auto sphere = Sphere3::builder()
-        .withCenter(domain.midPoint())
-        .withRadius(0.15 * domain.width())
-        .makeShared();
-
-    auto surfaceSet = ImplicitSurfaceSet3::builder()
-        .withExplicitSurfaces({ plane, sphere })
-        .makeShared();
-
-    auto emitter = VolumeParticleEmitter3::builder()
-        .withImplicitSurface(surfaceSet)
-        .withSpacing(targetSpacing)
-        .withMaxRegion(sourceBound)
-        .withIsOneShot(true)
-        .makeShared();
-
-    solver->setEmitter(emitter);
-
-    // Build collider
-    auto box = Box3::builder()
-        .withIsNormalFlipped(true)
-        .withBoundingBox(domain)
-        .makeShared();
-
-    auto collider = RigidBodyCollider3::builder().withSurface(box).makeShared();
-
-    solver->setCollider(collider);
-
-    // Print simulation info
-    printf("Running example 1 (water-drop with PCISPH)\n");
-    printInfo(solver);
-
-    // Run simulation
-    runSimulation(rootDir, solver, numberOfFrames, format, fps);
+	switch (key) {
+	case GLUT_KEY_LEFT:
+		angle += 0.02f;
+		lx = sin(angle) * cos(angleY);
+		lz = -cos(angle) * cos(angleY);
+		break;
+	case GLUT_KEY_RIGHT:
+		angle -= 0.02f;
+		lx = sin(angle) * cos(angleY);
+		lz = -cos(angle) * cos(angleY);
+		break;
+	case GLUT_KEY_UP:
+		if (angleY  > -1.0f * jet::kPiF / 2.0f) {
+			angleY -= 0.02f;
+		}
+		lx = sin(angle) * cos(angleY);
+		ly = sin(angleY);
+		lz = -cos(angle) * cos(angleY);
+		break;
+	case GLUT_KEY_DOWN:
+		if (angleY < jet::kPiF / 2.0f) {
+			angleY += 0.02f;
+		}
+		lx = sin(angle) * cos(angleY);
+		ly = sin(angleY);
+		lz = -cos(angle) * cos(angleY);
+		break;
+	case GLUT_ACTIVE_SHIFT:
+		dis -= 0.1f;
+		break;
+	case GLUT_ACTIVE_CTRL:
+		dis += 0.1f;
+		break;
+	}
 }
 
-// Water-drop example (SPH)
-void runExample2(const std::string& rootDir, double targetSpacing,
-    int numberOfFrames, const std::string& format, double fps) {
-    BoundingBox3D domain(Vector3D(), Vector3D(1, 2, 1));
+int main(int argc, char** argv) {
 
-    auto solver = SphSolver3::builder()
-        .withTargetDensity(1000.0)
-        .withTargetSpacing(targetSpacing)
-        .makeShared();
+	// init GLUT and create window
 
-    solver->setPseudoViscosityCoefficient(0.0);
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(320, 320);
+	glutCreateWindow("RealTimeRenderingTest");
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 
-    // Build emitter
-    BoundingBox3D sourceBound(domain);
-    sourceBound.expand(-targetSpacing);
 
-    auto plane = Plane3::builder()
-        .withNormal({ 0, 1, 0 })
-        .withPoint({ 0, 0.25 * domain.height(), 0 })
-        .makeShared();
+	
+	// register callbacks
+	glutDisplayFunc(renderScene);
+	glutReshapeFunc(changeSize);
+	glutIdleFunc(renderScene);
+	glutKeyboardFunc(processNormalKeys);
+	glutSpecialFunc(processSpecialKeys);
 
-    auto sphere = Sphere3::builder()
-        .withCenter(domain.midPoint())
-        .withRadius(0.15 * domain.width())
-        .makeShared();
+	// OpenGL init
+	glEnable(GL_DEPTH_TEST);
 
-    auto surfaceSet = ImplicitSurfaceSet3::builder()
-        .withExplicitSurfaces({ plane, sphere })
-        .makeShared();
+	std::string outputDir = APP_NAME "_output3";
+	jet::Coordinates coordinates;
+	for (int i = 0; i < 100; i++) {
+		coordinates = loadXYZFromFile(outputDir, i);
+		numberOfPoints = coordinates.values.size();
+		std::cout << i << std::endl;
+		points.clear();
+		for (size_t i = 0; i < coordinates.values.size(); i++)
+		{
+			Point pt;
+			pt.x = coordinates.values.at(i).x;
+			pt.y = coordinates.values.at(i).y;
+			pt.z = coordinates.values.at(i).z;
+			pt.r = 1;
+			pt.g = 1;
+			pt.b = 255;
+			pt.a = 50;
+			points.push_back(pt);
+		}
+		arrayOfPoints.push_back(points);
+	}
 
-    auto emitter = VolumeParticleEmitter3::builder()
-        .withImplicitSurface(surfaceSet)
-        .withSpacing(targetSpacing)
-        .withMaxRegion(sourceBound)
-        .withIsOneShot(true)
-        .makeShared();
 
-    solver->setEmitter(emitter);
 
-    // Build collider
-    auto box = Box3::builder()
-        .withIsNormalFlipped(true)
-        .withBoundingBox(domain)
-        .makeShared();
+	// enter GLUT event processing cycle
+	glutMainLoop();
 
-    auto collider = RigidBodyCollider3::builder().withSurface(box).makeShared();
-
-    solver->setCollider(collider);
-
-    // Print simulation info
-    printf("Running example 2 (water-drop with SPH)\n");
-    printInfo(solver);
-
-    // Run simulation
-    runSimulation(rootDir, solver, numberOfFrames, format, fps);
-}
-
-void runExample3(const std::string& rootDir, double targetSpacing,
-    int numberOfFrames, const std::string& format, double fps) {
-    BoundingBox3D domain(Vector3D(), Vector3D(3, 2, 1.5));
-    double lz = domain.depth();
-
-    // Build solver
-    auto solver = PciSphSolver3::builder()
-        .withTargetDensity(1000.0)
-        .withTargetSpacing(targetSpacing)
-        .makeShared();
-
-    solver->setPseudoViscosityCoefficient(0.0);
-    solver->setTimeStepLimitScale(10.0);
-
-    // Build emitter
-    BoundingBox3D sourceBound(domain);
-    sourceBound.expand(-targetSpacing);
-
-    auto box1 =
-        Box3::builder()
-        .withLowerCorner({ 0, 0, 0 })
-        .withUpperCorner({ 0.5 + 0.001, 0.75 + 0.001, 0.75 * lz + 0.001 })
-        .makeShared();
-
-    auto box2 =
-        Box3::builder()
-        .withLowerCorner({ 2.5 - 0.001, 0, 0.25 * lz - 0.001 })
-        .withUpperCorner({ 3.5 + 0.001, 0.75 + 0.001, 1.5 * lz + 0.001 })
-        .makeShared();
-
-    auto boxSet = ImplicitSurfaceSet3::builder()
-        .withExplicitSurfaces({ box1, box2 })
-        .makeShared();
-
-    auto emitter = VolumeParticleEmitter3::builder()
-        .withSurface(boxSet)
-        .withMaxRegion(sourceBound)
-        .withSpacing(targetSpacing)
-        .makeShared();
-
-    solver->setEmitter(emitter);
-
-    // Build collider
-    auto cyl1 = Cylinder3::builder()
-        .withCenter({ 1, 0.375, 0.375 })
-        .withRadius(0.1)
-        .withHeight(0.75)
-        .makeShared();
-
-    auto cyl2 = Cylinder3::builder()
-        .withCenter({ 1.5, 0.375, 0.75 })
-        .withRadius(0.1)
-        .withHeight(0.75)
-        .makeShared();
-
-    auto cyl3 = Cylinder3::builder()
-        .withCenter({ 2, 0.375, 1.125 })
-        .withRadius(0.1)
-        .withHeight(0.75)
-        .makeShared();
-
-    auto box = Box3::builder()
-        .withIsNormalFlipped(true)
-        .withBoundingBox(domain)
-        .makeShared();
-
-    auto surfaceSet = ImplicitSurfaceSet3::builder()
-        .withExplicitSurfaces({ cyl1, cyl2, cyl3, box })
-        .makeShared();
-
-    auto collider =
-        RigidBodyCollider3::builder().withSurface(surfaceSet).makeShared();
-
-    solver->setCollider(collider);
-
-    // Print simulation info
-    printf("Running example 3 (dam-breaking with PCISPH)\n");
-    printInfo(solver);
-
-    // Run simulation
-    runSimulation(rootDir, solver, numberOfFrames, format, fps);
-}
-
-int main(int argc, char* argv[]) {
-    bool showHelp = false;
-    double targetSpacing = 0.02;
-    int numberOfFrames = 100;
-    double fps = 60.0;
-    int exampleNum = 3;
-    std::string logFilename = APP_NAME ".log";
-    std::string outputDir = APP_NAME "_output3";
-    std::string format = "xyz";
-
-    // Parsing
-    auto parser =
-        clara::Help(showHelp) |
-        clara::Opt(targetSpacing, "targetSpacing")["-s"]["--spacing"](
-            "target particle spacing (default is 0.02)") |
-        clara::Opt(numberOfFrames, "numberOfFrames")["-f"]["--frames"](
-            "total number of frames (default is 100)") |
-        clara::Opt(
-            fps, "fps")["-p"]["--fps"]("frames per second (default is 60.0)") |
-        clara::Opt(exampleNum, "exampleNum")["-e"]["--example"](
-            "example number (between 1 and 3, default is 1)") |
-        clara::Opt(logFilename, "logFilename")["-l"]["--log"](
-            "log file name (default is " APP_NAME ".log)") |
-        clara::Opt(outputDir, "outputDir")["-o"]["--output"](
-            "output directory name (default is " APP_NAME "_output)") |
-        clara::Opt(format, "format")["-m"]["--format"](
-            "particle output format (xyz or pos. default is xyz)");
-
-    auto result = parser.parse(clara::Args(argc, argv));
-    if (!result) {
-        std::cerr << "Error in command line: " << result.errorMessage() << '\n';
-        exit(EXIT_FAILURE);
-    }
-
-    if (showHelp) {
-        std::cout << toString(parser) << '\n';
-        exit(EXIT_SUCCESS);
-    }
-
-#ifdef JET_WINDOWS
-    _mkdir(outputDir.c_str());
-#else
-    mkdir(outputDir.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
-#endif
-
-    std::ofstream logFile(logFilename.c_str());
-    if (logFile) {
-        Logging::setAllStream(&logFile);
-    }
-
-    switch (exampleNum) {
-    case 1:
-        runExample1(outputDir, targetSpacing, numberOfFrames, format, fps);
-        break;
-    case 2:
-        runExample2(outputDir, targetSpacing, numberOfFrames, format, fps);
-        break;
-    case 3:
-        runExample3(outputDir, targetSpacing, numberOfFrames, format, fps);
-        break;
-    default:
-        std::cout << toString(parser) << '\n';
-        exit(EXIT_FAILURE);
-    }
-
-    return EXIT_SUCCESS;
+	return 1;
 }

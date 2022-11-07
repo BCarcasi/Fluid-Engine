@@ -504,6 +504,12 @@
     <ClInclude Include="plane2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="xyz_extractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="generate_sph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
