@@ -282,9 +282,9 @@ int main(int argc, char* argv[]) {
     double targetSpacing = 0.02;
     int numberOfFrames = 100;
     double fps = 60.0;
-    int exampleNum = 3;
+    int exampleNum = 1;
     std::string logFilename = APP_NAME ".log";
-    std::string outputDir = APP_NAME "_output3";
+    std::string outputDir = APP_NAME "_output";
     std::string format = "xyz";
 
     // Parsing

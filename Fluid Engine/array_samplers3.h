@@ -12,6 +12,7 @@
 #include <limits>
 
 
+
 namespace jet {
 
     //!
@@ -175,7 +176,7 @@ namespace jet {
         = CubicArraySampler<T, R, 3>;
 
     template <typename T, typename R>
-    NearestArraySampler3<T, R>::NearestArraySampler(
+    NearestArraySampler<T, R, 3>::NearestArraySampler(
         const ConstArrayAccessor3<T>& accessor,
         const Vector3<R>& gridSpacing,
         const Vector3<R>& gridOrigin) {
@@ -185,7 +186,7 @@ namespace jet {
     }
 
     template <typename T, typename R>
-    NearestArraySampler3<T, R>::NearestArraySampler(
+    NearestArraySampler<T, R, 3>::NearestArraySampler(
         const NearestArraySampler& other) {
         _gridSpacing = other._gridSpacing;
         _origin = other._origin;
@@ -193,7 +194,7 @@ namespace jet {
     }
 
     template <typename T, typename R>
-    T NearestArraySampler3<T, R>::operator()(const Vector3<R>& x) const {
+    T NearestArraySampler<T, R, 3>::operator()(const Vector3<R>& x) const {
         ssize_t i, j, k;
         R fx, fy, fz;
 
@@ -218,7 +219,7 @@ namespace jet {
     }
 
     template <typename T, typename R>
-    void NearestArraySampler3<T, R>::getCoordinate(
+    void NearestArraySampler<T, R, 3>::getCoordinate(
         const Vector3<R>& x, Point3UI* index) const {
         ssize_t i, j, k;
         R fx, fy, fz;
@@ -244,14 +245,14 @@ namespace jet {
     template <typename T, typename R>
     std::function<T(const Vector3<R>&)>
 
-        NearestArraySampler3<T, R>::functor() const {
+        NearestArraySampler<T, R, 3>::functor() const {
         NearestArraySampler sampler(*this);
         return std::bind(
             &NearestArraySampler::operator(), sampler, std::placeholders::_1);
     }
 
     template <typename T, typename R>
-    LinearArraySampler3<T, R>::LinearArraySampler(
+    LinearArraySampler<T, R, 3>::LinearArraySampler(
         const ConstArrayAccessor3<T>& accessor,
         const Vector3<R>& gridSpacing,
         const Vector3<R>& gridOrigin) {
@@ -263,7 +264,7 @@ namespace jet {
 
 
     template <typename T, typename R>
-    LinearArraySampler3<T, R>::LinearArraySampler(
+    LinearArraySampler<T, R, 3>::LinearArraySampler(
         const LinearArraySampler& other) {
         _gridSpacing = other._gridSpacing;
         _invGridSpacing = other._invGridSpacing;
@@ -272,7 +273,7 @@ namespace jet {
     }
 
     template <typename T, typename R>
-    T LinearArraySampler3<T, R>::operator()(const Vector3<R>& x) const {
+    T LinearArraySampler<T, R, 3>::operator()(const Vector3<R>& x) const {
         ssize_t i, j, k;
         R fx, fy, fz;
 
@@ -308,7 +309,7 @@ namespace jet {
     }
 
     template <typename T, typename R>
-    void LinearArraySampler3<T, R>::getCoordinatesAndWeights(
+    void LinearArraySampler<T, R, 3>::getCoordinatesAndWeights(
         const Vector3<R>& x,
         std::array<Point3UI, 8>* indices,
         std::array<R, 8>* weights) const {
@@ -352,7 +353,7 @@ namespace jet {
     }
 
     template <typename T, typename R>
-    void LinearArraySampler3<T, R>::getCoordinatesAndGradientWeights(
+    void LinearArraySampler<T, R, 3>::getCoordinatesAndGradientWeights(
         const Vector3<R>& x,
         std::array<Point3UI, 8>* indices,
         std::array<Vector3<R>, 8>* weights) const {
@@ -420,7 +421,7 @@ namespace jet {
     }
 
     template <typename T, typename R>
-    std::function<T(const Vector3<R>&)> LinearArraySampler3<T, R>::functor() const {
+    std::function<T(const Vector3<R>&)> LinearArraySampler<T, R, 3>::functor() const {
         LinearArraySampler sampler(*this);
         return std::bind(
             &LinearArraySampler::operator(), sampler, std::placeholders::_1);
@@ -428,7 +429,7 @@ namespace jet {
 
 
     template <typename T, typename R>
-    CubicArraySampler3<T, R>::CubicArraySampler(
+    CubicArraySampler<T, R, 3>::CubicArraySampler(
         const ConstArrayAccessor3<T>& accessor,
         const Vector3<R>& gridSpacing,
         const Vector3<R>& gridOrigin) {
@@ -439,7 +440,7 @@ namespace jet {
 
 
     template <typename T, typename R>
-    CubicArraySampler3<T, R>::CubicArraySampler(
+    CubicArraySampler<T, R, 3>::CubicArraySampler(
         const CubicArraySampler& other) {
         _gridSpacing = other._gridSpacing;
         _origin = other._origin;
@@ -447,7 +448,7 @@ namespace jet {
     }
 
     template <typename T, typename R>
-    T CubicArraySampler3<T, R>::operator()(const Vector3<R>& x) const {
+    T CubicArraySampler<T, R, 3>::operator()(const Vector3<R>& x) const {
         ssize_t i, j, k;
         ssize_t iSize = static_cast<ssize_t>(_accessor.size().x);
         ssize_t jSize = static_cast<ssize_t>(_accessor.size().y);
@@ -464,19 +465,19 @@ namespace jet {
         getBarycentric(normalizedX.z, 0, kSize - 1, &k, &fz);
 
         ssize_t is[4] = {
-            std::max(i - 1, kZeroSSize),
+            std::max(i - (ssize_t)1, (ssize_t)kZeroSSize),
             i,
             std::min(i + 1, iSize - 1),
             std::min(i + 2, iSize - 1)
         };
         ssize_t js[4] = {
-            std::max(j - 1, kZeroSSize),
+            std::max(j - (ssize_t)1, (ssize_t)kZeroSSize),
             j,
             std::min(j + 1, jSize - 1),
             std::min(j + 2, jSize - 1)
         };
         ssize_t ks[4] = {
-            std::max(k - 1, kZeroSSize),
+            std::max(k - (ssize_t)1, (ssize_t)kZeroSSize),
             k,
             std::min(k + 1, kSize - 1),
             std::min(k + 2, kSize - 1)
@@ -505,11 +506,13 @@ namespace jet {
     }
 
     template <typename T, typename R>
-    std::function<T(const Vector3<R>&)> CubicArraySampler3<T, R>::functor() const {
+    std::function<T(const Vector3<R>&)> CubicArraySampler<T, R, 3>::functor() const {
         CubicArraySampler sampler(*this);
         return std::bind(
             &CubicArraySampler::operator(), sampler, std::placeholders::_1);
     }
+
+
 
 }  // namespace jet
 

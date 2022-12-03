@@ -19,16 +19,17 @@
 
 // angle of rotation for the camera direction
 float angle = 0.0;
-float angleY = 0.0;
+float angleY = -0.5f;
 // actual vector representing the camera's direction
-float lx = 0.0f, lz = -1.0f, ly = 0.0f, dis = 10.0f;
+
 // XZ position of the camera
-float camX = 0.0f, camY = 1.0f, z = 5.0f;
+float camX = 1.5f, camY = 0.0f, z = 1.0f;
+float lx = sin(angle) * cos(angleY), ly = sin(angleY), lz = -cos(angle) * cos(angleY), dis = 5.0f;
 bool freeze = false;
 int numOfFrames = 100;
 
 
-int numberOfPoints = 0, frame = 0, count = 0, framesBetweenSwitch = 4;
+int numberOfPoints = 0, frame = 0, count = 0, framesBetweenSwitch = 7;
 
 
 
@@ -63,12 +64,12 @@ bool basicCompareOpenGLPoint(Point p1, Point p2) {
 bool trueCompareOpenGLPoint(Point p1, Point p2) {
 
 	return std::pow(p1.x - (camX - lx * dis), 2) + std::pow(p1.y - (camY - ly * dis), 2) + std::pow(p1.z - (z - lz * dis), 2)
-	< std::pow(p2.x - (camX - lx * dis), 2) + std::pow(p2.y -( camY - ly * dis), 2) + std::pow(p2.z - (z - lz * dis), 2);
+		< std::pow(p2.x - (camX - lx * dis), 2) + std::pow(p2.y - (camY - ly * dis), 2) + std::pow(p2.z - (z - lz * dis), 2);
 }
 
 bool testTrueCompareOpenGLPoint(Point p1, Point p2) {
 	return ((p1.x - (camX - lx * dis)) * sin(angle) * cos(angleY) + (p1.y - (camY - ly * dis)) * -sin(angleY) + (p1.z - (z - lz * dis)) * cos(angle) * cos(angleY))
-	> ((p2.x - (camX - lx * dis)) * sin(angle) * cos(angleY) + (p2.y - (camY - ly * dis)) * -sin(angleY) + (p2.z - (z - lz * dis)) * cos(angle) * cos(angleY));
+		> ((p2.x - (camX - lx * dis)) * sin(angle) * cos(angleY) + (p2.y - (camY - ly * dis)) * -sin(angleY) + (p2.z - (z - lz * dis)) * cos(angle) * cos(angleY));
 }
 
 
@@ -101,13 +102,13 @@ void processNormalKeys(unsigned char key, int x, int y) {
 
 	if (key == 27)
 		exit(0);
-	if (key == 'e' && dis > 0.1)
+	if (key == 'e' && dis > 0.5)
 		dis -= 0.1f;
 	if (key == 'q')
 		dis += 0.1f;
 	if (key == 'w') {
-		camX += sin(angle)*0.2f;
-		z -= cos(angle)*0.2f;
+		camX += sin(angle) * 0.2f;
+		z -= cos(angle) * 0.2f;
 	}
 	if (key == 'a') {
 		camX -= cos(angle) * 0.2f;
@@ -142,7 +143,18 @@ void processNormalKeys(unsigned char key, int x, int y) {
 	if (key == 'm') std::cout << camX - lx * dis << " " << camY - ly * dis << camX - lx * dis << " " << z - lz * dis << " "
 		<< cos(angle) << " " << sin(angle) << " " << sin(angleY) << std::endl;
 	if (key == 'i') freeze = (1 - freeze);
-		
+	if (key == 'r') {
+		angle = 0.0;
+		angleY = -0.5f;
+		// actual vector representing the camera's direction
+
+		// XZ position of the camera
+		camX = 1.5f, camY = 0.0f, z = 1.0f;
+		lx = sin(angle) * cos(angleY), ly = sin(angleY), lz = -cos(angle) * cos(angleY), dis = 5.0f;
+		freeze = false;
+		framesBetweenSwitch = 7;
+	}
+
 }
 
 
@@ -171,14 +183,14 @@ void renderScene(void) {
 
 
 	points = arrayOfPoints.at(frame);
-	
+
 
 	glColor3ub(255, 255, 255);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Point), &points[0].x);
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Point), &points[0].r);
-	glPointSize(2.0 + pow(3.0f/(dis+0.8),2));
+	glPointSize(2.0 + pow(3.0f / (dis + 0.8), 2));
 	glDrawArrays(GL_POINTS, 0, points.size());
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
@@ -186,7 +198,7 @@ void renderScene(void) {
 	glFlush();
 
 	glutSwapBuffers();
-	if (count == 0 && !freeze){
+	if (count == 0 && !freeze) {
 		frame = (frame + 1) % numOfFrames;
 	}
 	count = (count + 1) % framesBetweenSwitch;
@@ -208,7 +220,7 @@ void processSpecialKeys(int key, int xx, int yy) {
 		lz = -cos(angle) * cos(angleY);
 		break;
 	case GLUT_KEY_UP:
-		if (angleY  > -1.0f * jet::kPiF / 2.0f) {
+		if (angleY > -0.99f * jet::kPiF / 2.0f) {
 			angleY -= 0.02f;
 		}
 		lx = sin(angle) * cos(angleY);
@@ -216,7 +228,7 @@ void processSpecialKeys(int key, int xx, int yy) {
 		lz = -cos(angle) * cos(angleY);
 		break;
 	case GLUT_KEY_DOWN:
-		if (angleY < jet::kPiF / 2.0f) {
+		if (angleY < -0.1f) {
 			angleY += 0.02f;
 		}
 		lx = sin(angle) * cos(angleY);
@@ -247,7 +259,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_BLEND);
 
 
-	
+
 	// register callbacks
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
@@ -263,7 +275,8 @@ int main(int argc, char** argv) {
 	std::vector<bool> redBlue;
 	coordinates = loadXYZFromFile(outputDir, 0);
 	for (size_t i = 0; i < coordinates.values.size(); i++) {
-		redBlue.push_back(coordinates.values.at(i).x>1.0);
+		redBlue.push_back(coordinates.values.at(i).y > 0.5);
+		//std::cout << i << std::endl;
 	}
 
 	for (int i = 0; i < numOfFrames; i++) {
@@ -271,8 +284,6 @@ int main(int argc, char** argv) {
 		numberOfPoints = coordinates.values.size();
 		std::cout << i << std::endl;
 		points.clear();
-		
-
 
 
 		for (size_t i = 0; i < coordinates.values.size(); i++)
@@ -281,11 +292,11 @@ int main(int argc, char** argv) {
 			pt.x = coordinates.values.at(i).x;
 			pt.y = coordinates.values.at(i).y;
 			pt.z = coordinates.values.at(i).z;
+			//std::cout << i << std::endl;
 			pt.r = 1;
 			pt.g = 1;
 			pt.b = 255;
 			pt.a = 8;
-
 			points.push_back(pt);
 		}
 		sort(points.begin(), points.end(), basicCompareOpenGLPoint);

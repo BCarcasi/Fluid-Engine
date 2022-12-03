@@ -14,6 +14,8 @@ namespace jet {
 
         struct Vector3D;
 
+
+
         MANUALLY_ALIGNED_STRUCT(8) Size2 FLATBUFFERS_FINAL_CLASS {
         private:
             uint64_t x_;
@@ -125,6 +127,8 @@ namespace jet {
         STRUCT_END(Vector3D, 24);
 
     }  // namespace fbs
+
+
 }  // namespace jet
 
 #endif  // FLATBUFFERS_GENERATED_BASICTYPES_JET_FBS_H_

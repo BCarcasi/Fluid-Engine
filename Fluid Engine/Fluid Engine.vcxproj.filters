@@ -510,13 +510,127 @@
     <ClInclude Include="generate_sph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="level_set_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level_set_liquid_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_fluid_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="advection_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="constant_scalar_field3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_boundary_condition_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_diffusion_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_emitter3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_pressure_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_system_data3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_system_data3_generated.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cubic_semi_lagrangian3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="semi_lagrangian3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_backward_euler_diffusion_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fdm_linear_system_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fdm_linear_system3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matrix_csr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpp_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fdm_iccg_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fdm_cg_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_blocked_boundary_condition_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_fractional_boundary_condition_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_fractional_single_phase_pressure_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fdm_mg_linear_system3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fdm_mg_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fdm_gauss_seidel_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eno_level_set_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="iterative_level_set_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pde.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fmm_level_set_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="marching_cubes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="marching_cubes_table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="marching_squares_table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volume_grid_emitter3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="implicit_triangle_mesh3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="triangle_mesh_to_sdf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="visualize_xyz.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics.h">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateGrid.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -524,5 +638,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="basic_types.fbs" />
   </ItemGroup>
 </Project>
