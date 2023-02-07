@@ -1,4 +1,4 @@
-
+#pragma once
 #include <pystring/pystring.h>
 #include <cmath>
 #include <gl/glew.h>

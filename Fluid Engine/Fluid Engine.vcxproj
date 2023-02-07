@@ -83,7 +83,7 @@
     <ClInclude Include="flat_data_generated.h" />
     <ClInclude Include="fmm_level_set_solver3.h" />
     <ClInclude Include="functors.h" />
-    <ClInclude Include="generate_sph.h" />
+    <ClInclude Include="_generate_sph.h" />
     <ClInclude Include="grid2.h" />
     <ClInclude Include="grid3.h" />
     <ClInclude Include="grid_backward_euler_diffusion_solver3.h" />
@@ -121,6 +121,7 @@
     <ClInclude Include="matrix4x4.h" />
     <ClInclude Include="matrix_csr.h" />
     <ClInclude Include="matrix_expression.h" />
+    <ClInclude Include="mesh_extractor.h" />
     <ClInclude Include="mg.h" />
     <ClInclude Include="nearest_neighbor_query_engine3.h" />
     <ClInclude Include="parallel.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="semi_lagrangian3.h" />
     <ClInclude Include="serial.h" />
     <ClInclude Include="serialization.h" />
+    <ClInclude Include="shader.h" />
     <ClInclude Include="simpleSetup.h" />
     <ClInclude Include="simple_spring.h" />
     <ClInclude Include="clara_utils.h" />
@@ -219,10 +221,12 @@
     <ClInclude Include="vertex_centered_scalar_grid3.h" />
     <ClInclude Include="vertex_centered_vector_grid2.h" />
     <ClInclude Include="vertex_centered_vector_grid3.h" />
-    <ClInclude Include="visualize_xyz.h" />
+    <ClInclude Include="_visualize_xyz.h" />
     <ClInclude Include="volume_grid_emitter3.h" />
     <ClInclude Include="volume_particle_emitter3.h" />
     <ClInclude Include="xyz_extractor.h" />
+    <ClInclude Include="_generate_grid.h" />
+    <ClInclude Include="_visualize_mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GenerateGrid.cpp" />
@@ -319,7 +323,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\benca\Documents\Libraries\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj /MP %(AdditionalOptions)</AdditionalOptions>
@@ -339,7 +343,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\benca\Documents\Libraries\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj /MP %(AdditionalOptions)</AdditionalOptions>

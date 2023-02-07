@@ -132,6 +132,7 @@ namespace jet {
         printf("Running example 1 (water-drop with PCISPH)\n");
         printInfo(solver);
 
+
         // Run simulation
         runSimulation(rootDir, solver, numberOfFrames, format, fps);
     }

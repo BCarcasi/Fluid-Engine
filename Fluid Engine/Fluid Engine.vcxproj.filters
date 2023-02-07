@@ -507,7 +507,7 @@
     <ClInclude Include="xyz_extractor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="generate_sph.h">
+    <ClInclude Include="_generate_sph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="level_set_solver3.h">
@@ -621,7 +621,19 @@
     <ClInclude Include="triangle_mesh_to_sdf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="visualize_xyz.h">
+    <ClInclude Include="_visualize_xyz.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_generate_grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_visualize_mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh_extractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
