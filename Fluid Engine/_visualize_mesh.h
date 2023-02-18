@@ -1,4 +1,5 @@
 #pragma once
+#include <pystring/pystring.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
@@ -16,22 +17,18 @@ GLFWwindow* window;
 using namespace glm;
 
 #include "shader.h"
-#include <common/texture.hpp>
-#include <common/controls.hpp>
-#include <mesh_extractor.h>
+#include "controls.h"
+#include "mesh_extractor.h"
+
 
 #define APP_NAME "level_set_liquid_sim"
 
 
 
 
+int AnimationLength = 100;
 
 
-std::vector<glm::vec3>& vertices;
-std::vector<glm::vec2>& uvs;
-std::vector<glm::vec3>& normals;
-
-GLFWwindow* window;
 
 
 
@@ -55,7 +52,7 @@ int main(int argc, char** argv) {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Open a window and create its OpenGL context
-	window = glfwCreateWindow(1024, 768, "Tutorial 07 - Model Loading", NULL, NULL);
+	window = glfwCreateWindow(1024, 768, "Mesh Renderer", NULL, NULL);
 	if (window == NULL) {
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		getchar();
@@ -80,7 +77,7 @@ int main(int argc, char** argv) {
 
 	// Set the mouse at the center of the screen
 	glfwPollEvents();
-	glfwSetCursorPos(window, 1024 / 2, 768 / 2);
+	//glfwSetCursorPos(window, 1024 / 2, 768 / 2);
 
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -91,41 +88,72 @@ int main(int argc, char** argv) {
 	glDepthFunc(GL_LESS);
 
 	// Cull triangles which normal is not towards the camera
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
+
+	std::cout << "error 5" << std::endl;
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
+
+	std::cout << "error 6" << std::endl;
 	// Create and compile our GLSL program from the shaders
 	GLuint programID = LoadShaders("TransformVertexShader.vertexshader", "TextureFragmentShader.fragmentshader");
+
+	std::cout << "error 11" << std::endl;
 
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
 
+	std::cout << "error 7" << std::endl;
+
 	// Load the texture
-	GLuint Texture = loadDDS("uvmap.DDS");
+	//GLuint Texture = loadDDS("uvmap.DDS");
+
+	std::cout << "error 8" << std::endl;
 
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
+	std::vector<std::vector<glm::vec3>> vertices;
+	std::vector<std::vector<glm::vec2>> uvs;
+	std::vector<std::vector<glm::vec3>> normals;
 
 
-	std::string outputDir = APP_NAME "_output3_HighRes";
+
+	std::string outputDir = APP_NAME "_output3";
 	char basename[256];
-	snprintf(basename, sizeof(basename), "frame_%06d.xyz", 0);
-	std::string filename = pystring::os::path::join(outputDir, basename);
-	bool res = loadOBJ("cube.obj", vertices, uvs, normals);
 
-	GLuint vertexbuffer;
-	glGenBuffers(1, &vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+	std::cout << "error 1" << std::endl;
+	for (int i = 0; i < AnimationLength; i++) {
+		snprintf(basename, sizeof(basename), "frame_%06d.obj", i);
+		std::string filename = pystring::os::path::join(outputDir, basename);
+		std::vector<glm::vec3> verticesBase; std::vector<glm::vec2> uvsBase; std::vector<glm::vec3> normalsBase;
+		bool res = loadOBJ(filename.c_str(), verticesBase, uvsBase, normalsBase);
+		vertices.push_back(verticesBase); uvs.push_back(uvsBase); normals.push_back(normalsBase);
+	}
 
-	GLuint uvbuffer;
-	glGenBuffers(1, &uvbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
+	std::cout << "error 12" << std::endl;
+	std::vector<GLuint> vertexbuffer;
+	for (int i = 0; i < AnimationLength; i++) {
+		GLuint vertexbufferbase;
+		glGenBuffers(1, &vertexbufferbase);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexbufferbase);
+		glBufferData(GL_ARRAY_BUFFER, vertices[i].size() * sizeof(glm::vec3), &vertices[i][0], GL_STATIC_DRAW);
+		vertexbuffer.push_back(vertexbufferbase);
+	}
 
+	std::cout << "error 13" << std::endl;
+	std::vector<GLuint> uvbuffer;
+	for (int i = 0; i < AnimationLength; i++) {
+		GLuint uvbufferbase;
+		glGenBuffers(1, &uvbufferbase);
+		glBindBuffer(GL_ARRAY_BUFFER, uvbufferbase);
+		glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[i][0], GL_STATIC_DRAW);
+		uvbuffer.push_back(uvbufferbase);
+	}
+	std::cout << "error 14" << std::endl;
+	float frame = 0;
 	do {
 
 		// Clear the screen
@@ -135,25 +163,26 @@ int main(int argc, char** argv) {
 		glUseProgram(programID);
 
 		// Compute the MVP matrix from keyboard and mouse input
-		computeMatricesFromInputs();
-		glm::mat4 ProjectionMatrix = getProjectionMatrix();
-		glm::mat4 ViewMatrix = getViewMatrix();
-		glm::mat4 ModelMatrix = glm::mat4(1.0);
-		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+		//computeMatricesFromInputs(window);
+		//glm::mat4 ProjectionMatrix = getProjectionMatrix();
+		//glm::mat4 ViewMatrix = getViewMatrix();
+		//glm::mat4 ModelMatrix = glm::mat4(1.0);
+		//glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
 		// Send our transformation to the currently bound shader, 
 		// in the "MVP" uniform
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+		//glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
-		// Bind our texture in Texture Unit 0
+		/*// Bind our texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, Texture);
 		// Set our "myTextureSampler" sampler to use Texture Unit 0
 		glUniform1i(TextureID, 0);
+		*/
 
 		// 1rst attribute buffer : vertices
 		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer[floor(frame)]);
 		glVertexAttribPointer(
 			0,                  // attribute
 			3,                  // size
@@ -165,7 +194,7 @@ int main(int argc, char** argv) {
 
 		// 2nd attribute buffer : UVs
 		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, uvbuffer[floor(frame)]);
 		glVertexAttribPointer(
 			1,                                // attribute
 			2,                                // size
@@ -175,11 +204,19 @@ int main(int argc, char** argv) {
 			(void*)0                          // array buffer offset
 		);
 
+		frame += 0.003f;
+		if (floor(frame) > AnimationLength) {
+			frame = 0;
+		}
+
 		// Draw the triangle !
-		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+		glDrawArrays(GL_TRIANGLES, 0, vertices[floor(frame)].size());
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
+
+		glEnd();
+		glFlush();
 
 		// Swap buffers
 		glfwSwapBuffers(window);
@@ -190,10 +227,12 @@ int main(int argc, char** argv) {
 		glfwWindowShouldClose(window) == 0);
 
 	// Cleanup VBO and shader
-	glDeleteBuffers(1, &vertexbuffer);
-	glDeleteBuffers(1, &uvbuffer);
+	for (int i = 0; i < AnimationLength; i++) {
+		glDeleteBuffers(1, &vertexbuffer[i]);
+		glDeleteBuffers(1, &uvbuffer[i]);
+	}
 	glDeleteProgram(programID);
-	glDeleteTextures(1, &Texture);
+	//glDeleteTextures(1, &Texture);
 	glDeleteVertexArrays(1, &VertexArrayID);
 
 	// Close OpenGL window and terminate GLFW

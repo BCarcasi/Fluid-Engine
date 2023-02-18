@@ -636,6 +636,9 @@
     <ClInclude Include="shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="controls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics.h">
@@ -651,5 +654,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="basic_types.fbs" />
+    <None Include="TransformVertexShader.vertexshader" />
+    <None Include="TextureFragmentShader.fragmentshader" />
   </ItemGroup>
 </Project>
