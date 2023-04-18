@@ -31,15 +31,15 @@ double sZhuBridsonCutOffThreshold = 0.25;
 double sAnisoCutOffDensity = 0.5;
 double sAnisoPositionSmoothingFactor = 0.5;
 size_t sAnisoMinNumNeighbors = 25;
-int animationLength = 200;
+int animationLength = 100;
 
 #define APP_NAME "hybrid_liquid_sim"
-std::string outputDir = APP_NAME "_output5";
+std::string outputDir = APP_NAME "_output2";
 
 void printInfo(const Size3& resolution, const BoundingBox3D& domain,
     const Vector3D& gridSpacing, size_t numberOfParticles,
     const std::string& method) {
-    printf("Resolution: %zu x %zu x %zu\n", resolution.x *2, resolution.y*2,
+    printf("Resolution: %zu x %zu x %zu\n", resolution.x, resolution.y,
         resolution.z);
     printf("Domain: [%f, %f, %f] x [%f, %f, %f]\n", domain.lowerCorner.x,
         domain.lowerCorner.y, domain.lowerCorner.z, domain.upperCorner.x,
@@ -206,7 +206,7 @@ bool LoadOBJ(const std::string& fileName,
     return true;
 }
 bool SaveOBJ(const std::string& fileName,
-    const std::vector< MeshDecimation::Vec3<MeshDecimation::Float> >& points,
+    const std:: vector< MeshDecimation::Vec3<MeshDecimation::Float> >& points,
     const std::vector< MeshDecimation::Vec3<int> >& triangles)
 {
     std::cout << "Saving " << fileName << std::endl;
@@ -241,7 +241,7 @@ void CallBack(const char* msg)
 
 int main(int argc, char* argv[]) {
     bool showHelp = false;
-    Size3 resolution(50 * 3, 50 * 2, 50 * 1.5);
+    Size3 resolution(50*3, 50*2, 50*1.5);
     Vector3D gridSpacing(0.02, 0.02, 0.02);
     Vector3D origin;
     std::string method = "sph";
@@ -422,7 +422,7 @@ int main(int argc, char* argv[]) {
     }
 
 
-
+    
     return EXIT_SUCCESS;
 }
 

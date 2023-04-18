@@ -223,6 +223,9 @@ namespace jet {
                 Timer timer;
                 onAdvanceTimeStep(actualTimeInterval);
 
+    
+
+
                 //JET_INFO << "End onAdvanceTimeStep (took "<< timer.durationInSeconds() << " seconds)";
 
                 _currentTime += actualTimeInterval;

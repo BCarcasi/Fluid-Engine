@@ -22,6 +22,8 @@
   <ItemGroup>
     <ClInclude Include="advection_solver3.h" />
     <ClInclude Include="animation.h" />
+    <ClInclude Include="anisotropic_points_to_implicit3.h" />
+    <ClInclude Include="apic_solver3.h" />
     <ClInclude Include="array.h" />
     <ClInclude Include="array1.h" />
     <ClInclude Include="array2.h" />
@@ -82,8 +84,24 @@
     <ClInclude Include="field3.h" />
     <ClInclude Include="flatbuffers.h" />
     <ClInclude Include="flat_data_generated.h" />
+    <ClInclude Include="flip_solver3.h" />
     <ClInclude Include="fmm_level_set_solver3.h" />
     <ClInclude Include="functors.h" />
+    <ClInclude Include="grid_point_generator3.h" />
+    <ClInclude Include="grid_smoke_solver3.h" />
+    <ClInclude Include="io_utils.h" />
+    <ClInclude Include="matrix_mxn.h" />
+    <ClInclude Include="obj_simplifier.h" />
+    <ClInclude Include="particle_emitter_set3.h" />
+    <ClInclude Include="points_to_implicit3.h" />
+    <ClInclude Include="spherical_points_to_implicit3.h" />
+    <ClInclude Include="sph_points_to_implicit3.h" />
+    <ClInclude Include="svd.h" />
+    <ClInclude Include="texture.h" />
+    <ClInclude Include="vboindexer.h" />
+    <ClInclude Include="zhu_bridson_points_to_implicit3.h" />
+    <ClInclude Include="_generate_hybrid.h" />
+    <ClInclude Include="_generate_smoke.h" />
     <ClInclude Include="_generate_sph.h" />
     <ClInclude Include="grid2.h" />
     <ClInclude Include="grid3.h" />
@@ -228,6 +246,7 @@
     <ClInclude Include="xyz_extractor.h" />
     <ClInclude Include="_generate_grid.h" />
     <ClInclude Include="_visualize_mesh.h" />
+    <ClInclude Include="_xyz2obj.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GenerateGrid.cpp" />

@@ -28,6 +28,7 @@ glm::mat4 getProjectionMatrix() {
 
 // Initial position : on +Z
 glm::vec3 position = glm::vec3(0, 0, 5);
+glm::vec3 camLookAt = glm::vec3(0.5, 0, 0.5);
 // Initial horizontal angle : toward -Z
 float horizontalAngle = 3.14f;
 // Initial vertical angle : none
@@ -62,6 +63,13 @@ void computeMatricesFromInputs(GLFWwindow* window) {
 	//verticalAngle += mouseSpeed * float(0.5 - ypos);
 
 	// Direction : Spherical coordinates to Cartesian coordinates conversion
+
+	
+	//std::cout << horizontalAngle << std::endl;
+	//std::cout << position.x << " " << position.y << std::endl;
+	horizontalAngle = atan2f(camLookAt.x - position.x, camLookAt.z - position.z);
+	verticalAngle = atan2f(-position.y, sqrtf(powf(camLookAt.x - position.x, 2) + (camLookAt.z - position.z, 2)));
+
 	glm::vec3 direction(
 		cos(verticalAngle) * sin(horizontalAngle),
 		sin(verticalAngle),
@@ -75,8 +83,14 @@ void computeMatricesFromInputs(GLFWwindow* window) {
 		cos(horizontalAngle - 3.14f / 2.0f)
 	);
 
+	
+
+	
+
 	// Up vector
 	glm::vec3 up = glm::cross(right, direction);
+
+	
 
 	// Move forward
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
@@ -103,6 +117,10 @@ void computeMatricesFromInputs(GLFWwindow* window) {
 		position -= up * deltaTime * speed;
 	}
 
+
+	
+	
+
 	double xoffset, yoffset;
 	
 
@@ -113,7 +131,7 @@ void computeMatricesFromInputs(GLFWwindow* window) {
 	// Camera matrix
 	ViewMatrix = glm::lookAt(
 		position,           // Camera is here
-		position + direction, // and looks here : at the same position, plus "direction"
+		camLookAt , // and looks here : at the same position, plus "direction"
 		up                  // Head is up (set to 0,-1,0 to look upside-down)
 	);
 

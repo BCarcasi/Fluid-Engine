@@ -15,7 +15,7 @@
 #include "xyz_extractor.h"
 #include <algorithm>
 
-#define APP_NAME "sph_sim"
+#define APP_NAME "hybrid_liquid_sim"
 
 // angle of rotation for the camera direction
 float angle = 0.0;
@@ -126,20 +126,6 @@ void processNormalKeys(unsigned char key, int x, int y) {
 	if (key == 'x') camY -= 0.2f;
 	if (key == 'k' && framesBetweenSwitch > 1) framesBetweenSwitch -= 1;
 	if (key == 'j') framesBetweenSwitch += 1;
-	if (key == 'n') {
-		for (int i = 0; i < arrayOfPoints.size(); i++) {
-			points = arrayOfPoints.at(i);
-			std::sort(points.begin(), points.end(), basicCompareOpenGLPoint);
-			std::cout << i << std::endl;
-		}
-	}
-	if (key == 'b') {
-		for (int i = 0; i < arrayOfPoints.size(); i++) {
-			points = arrayOfPoints.at(i);
-			std::sort(points.begin(), points.end(), trueCompareOpenGLPoint);
-			std::cout << i << std::endl;
-		}
-	}
 	if (key == 'm') std::cout << camX - lx * dis << " " << camY - ly * dis << camX - lx * dis << " " << z - lz * dis << " "
 		<< cos(angle) << " " << sin(angle) << " " << sin(angleY) << std::endl;
 	if (key == 'i') freeze = (1 - freeze);
@@ -270,7 +256,7 @@ int main(int argc, char** argv) {
 	// OpenGL init
 	glEnable(GL_DEPTH_TEST);
 
-	std::string outputDir = APP_NAME "_output3";
+	std::string outputDir = APP_NAME "_output4";
 	jet::Coordinates coordinates;
 	std::vector<bool> redBlue;
 	coordinates = loadXYZFromFile(outputDir, 0);

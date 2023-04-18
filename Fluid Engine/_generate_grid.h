@@ -34,14 +34,16 @@ void saveTriangleMesh(const TriangleMesh3& mesh, const std::string& rootDir,
     }
 }
 
+
 void triangulateAndSave(const ScalarGrid3Ptr& sdf, const std::string& rootDir,
-    int frameCnt) {
+    int frameCnt, const FaceCenteredGrid3Ptr& uvInfo) {
     TriangleMesh3 mesh;
     int flag = kDirectionAll & ~kDirectionDown;
     marchingCubes(sdf->constDataAccessor(), sdf->gridSpacing(),
-        sdf->dataOrigin(), &mesh, 0.0, flag);
+        sdf->dataOrigin(), &mesh, uvInfo, 0.0, flag);
     saveTriangleMesh(mesh, rootDir, frameCnt);
 }
+
 
 void printInfo(const LevelSetLiquidSolver3Ptr& solver) {
     auto grids = solver->gridSystemData();
@@ -62,11 +64,15 @@ void runSimulation(const std::string& rootDir,
     const LevelSetLiquidSolver3Ptr& solver, int numberOfFrames,
     double fps) {
     auto sdf = solver->signedDistanceField();
-
+    float minimum = 100000;
+    float max = -1000000;
     for (Frame frame(0, 1.0 / fps); frame.index < numberOfFrames; ++frame) {
         solver->update(frame);
 
-        triangulateAndSave(sdf, rootDir, frame.index);
+        GridSystemData3Ptr temp = solver->gridSystemData();
+        FaceCenteredGrid3Ptr temp3 = temp->velocity();
+
+        triangulateAndSave(sdf, rootDir, frame.index, temp3);
     }
 }
 
@@ -182,7 +188,7 @@ void runExample2(const std::string& rootDir, size_t resX, int numberOfFrames,
     runSimulation(rootDir, solver, numberOfFrames, fps);
 }
 
-/*// High-viscosity example (bunny-drop)
+// High-viscosity example (bunny-drop)
 void runExample3(const std::string& rootDir, size_t resX, int numberOfFrames,
     double fps) {
     // Build solver
@@ -199,7 +205,7 @@ void runExample3(const std::string& rootDir, size_t resX, int numberOfFrames,
 
     // Build emitters
     auto bunnyMesh = TriangleMesh3::builder().makeShared();
-    std::ifstream objFile(RESOURCES_DIR "/bunny.obj");
+    std::ifstream objFile("bunny.obj");
     if (objFile) {
         bunnyMesh->readObj(&objFile);
     }
@@ -243,7 +249,7 @@ void runExample4(const std::string& rootDir, size_t resX, int numberOfFrames,
 
     // Build emitters
     auto bunnyMesh = TriangleMesh3::builder().makeShared();
-    std::ifstream objFile(RESOURCES_DIR "/bunny.obj");
+    std::ifstream objFile("bunny.obj");
     if (objFile) {
         bunnyMesh->readObj(&objFile);
     }
@@ -268,16 +274,16 @@ void runExample4(const std::string& rootDir, size_t resX, int numberOfFrames,
 
     // Run simulation
     runSimulation(rootDir, solver, numberOfFrames, fps);
-}*/
+}
 
 int main(int argc, char* argv[]) {
     bool showHelp = false;
     size_t resX = 50;
-    int numberOfFrames = 100;
+    int numberOfFrames = 200;
     double fps = 60.0;
-    int exampleNum = 2;
+    int exampleNum = 4;
     std::string logFilename = APP_NAME ".log";
-    std::string outputDir = APP_NAME "_output2";
+    std::string outputDir = APP_NAME "_output5";
 
     // Parsing
     auto parser =
@@ -324,14 +330,13 @@ int main(int argc, char* argv[]) {
     case 2:
         runExample2(outputDir, resX, numberOfFrames, fps);
         break;
-        /*
+
     case 3:
         runExample3(outputDir, resX, numberOfFrames, fps);
         break;
     case 4:
         runExample4(outputDir, resX, numberOfFrames, fps);
         break;
-        */
     default:
         std::cout << toString(parser) << '\n';
         exit(EXIT_FAILURE);

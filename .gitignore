@@ -369,3 +369,9 @@ FodyWeavers.xsd
 /Fluid Engine/sph_sim_output2
 /Fluid Engine/sph_sim_output3
 *.mp4
+/Fluid Engine/hybrid_liquid_sim_output
+/Fluid Engine/hybrid_liquid_sim_output2
+/Fluid Engine/hybrid_liquid_sim_output3
+/Fluid Engine/hybrid_liquid_sim_output4
+/Fluid Engine/hybrid_liquid_sim_output5
+/Fluid Engine/smoke_sim_output

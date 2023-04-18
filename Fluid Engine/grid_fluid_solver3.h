@@ -562,7 +562,10 @@ namespace jet {
             return;
         }
 
+        
+
         beginAdvanceTimeStep(timeIntervalInSeconds);
+       
 
         Timer timer;
         computeExternalForces(timeIntervalInSeconds);
@@ -585,6 +588,10 @@ namespace jet {
             << " seconds";
 
         endAdvanceTimeStep(timeIntervalInSeconds);
+
+        //auto test = gridSystemData()->velocity();
+       
+        //std::cout << test->uConstAccessor()->at(0,0,0) << std::endl;
     }
 
     unsigned int GridFluidSolver3::numberOfSubTimeSteps(

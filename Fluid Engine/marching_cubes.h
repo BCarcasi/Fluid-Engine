@@ -3,7 +3,7 @@
 
 #include "array_accessor3.h"
 #include "constants.h"
-#include "triangle_mesh3.h"
+
 
 #include "pch.h"
 
@@ -16,6 +16,8 @@
 
 #include <array>
 #include <unordered_map>
+
+
 
 namespace jet {
 
@@ -39,7 +41,7 @@ namespace jet {
     //!
     void marchingCubes(const ConstArrayAccessor3<double>& grid,
         const Vector3D& gridSize, const Vector3D& origin,
-        TriangleMesh3* mesh, double isoValue = 0,
+        TriangleMesh3* mesh, const FaceCenteredGrid3Ptr& uvInfo, double isoValue = 0,
         int bndClose = kDirectionAll,
         int bndConnectivity = kDirectionNone);
 
@@ -152,7 +154,7 @@ namespace jet {
         const Vector3D& normal,
         const std::array<Vector3D, 4>& corners,
         MarchingCubeVertexMap* vertexMap, TriangleMesh3* mesh,
-        double isoValue) {
+        const FaceCenteredGrid3Ptr& uvInfo, double isoValue) {
         int itrVertex, itrEdge, itrTri;
         int idxFlags = 0, idxEdgeFlags = 0;
         int idxVertexOfTheEdge[2];
@@ -244,7 +246,33 @@ namespace jet {
                     else {
                         mesh->addPoint(e[idxVertex - 4]);
                     }
-                    mesh->addUv(Vector2D());  // empty texture coord...
+
+                    float dataUv = 0.0f;
+
+                    if (uvInfo) {
+
+                        Size3 position = Size3(std::floor(corners[idxVertexOfTheEdge[0]].x * uvInfo->uSize().x), std::floor(corners[idxVertexOfTheEdge[0]].y * uvInfo->uSize().y), std::floor(corners[idxVertexOfTheEdge[0]].z * uvInfo->uSize().z));
+
+
+
+                        dataUv =
+                            pow(pow(uvInfo->u(position.x, position.y, position.z), 2) +
+                                pow(uvInfo->v(position.x, position.y, position.z), 2) +
+                                pow(uvInfo->w(position.x, position.y, position.z), 2), 0.5) / 3;
+
+
+
+                        if (dataUv > 1.0f) {
+
+                            dataUv = 1.0f;
+                        }
+                    }
+
+                
+
+
+
+                    mesh->addUv(Vector2D(0.0, dataUv));
                     vertexMap->insert(std::make_pair(vKey, face[j]));
                 }
             }
@@ -258,7 +286,7 @@ namespace jet {
         const std::array<Vector3D, 8>& normals,
         const BoundingBox3D& bound,
         MarchingCubeVertexMap* vertexMap, TriangleMesh3* mesh,
-        double isoValue) {
+        const FaceCenteredGrid3Ptr& uvInfo, double isoValue) {
         int itrVertex, itrEdge, itrTri;
         int idxFlagSize = 0, idxEdgeFlags = 0;
         int idxVertexOfTheEdge[2];
@@ -347,7 +375,34 @@ namespace jet {
                     mesh->addNormal(safeNormalize(
                         n[triangleConnectionTable3D[idxFlagSize][k]]));
                     mesh->addPoint(e[triangleConnectionTable3D[idxFlagSize][k]]);
-                    mesh->addUv(Vector2D());
+
+                    float dataUv = 0.0f;
+                    
+                    
+                    if (uvInfo) {
+                        //std::cout << dataAccessor.size().x << std::endl;
+                        //std::cout << (int)round(bound.lowerCorner.x * dataAccessor.size().x) << " " << (int)round(bound.lowerCorner.y * dataAccessor.size().y) << " " << (int)round(bound.lowerCorner.z * dataAccessor.size().z) << std::endl;
+                        Size3 position = Size3((int)round(bound.lowerCorner.x * uvInfo->uSize().x), (int)round(bound.lowerCorner.y * uvInfo->uSize().y), (int)round(bound.lowerCorner.z * uvInfo->uSize().z));
+
+
+                        dataUv =
+                            pow(pow(uvInfo->u(position.x, position.y, position.z), 2) +
+                                pow(uvInfo->v(position.x, position.y, position.z), 2) +
+                                pow(uvInfo->w(position.x, position.y, position.z), 2), 0.5) / 3;
+
+
+
+                        if (dataUv > 1.0f) {
+
+                            dataUv = 1.0f;
+                        }
+
+                    }
+
+
+               
+                    
+                    mesh->addUv(Vector2D(0.0, dataUv));
                     vertexMap->insert(std::make_pair(vKey, face[j]));
                 }
             }
@@ -357,7 +412,7 @@ namespace jet {
 
     void marchingCubes(const ConstArrayAccessor3<double>& grid,
         const Vector3D& gridSize, const Vector3D& origin,
-        TriangleMesh3* mesh, double isoValue, int bndClose,
+        TriangleMesh3* mesh, const FaceCenteredGrid3Ptr& uvInfo, double isoValue, int bndClose,
         int bndConnectivity) {
         MarchingCubeVertexMap vertexMap;
 
@@ -406,7 +461,7 @@ namespace jet {
                     bound.upperCorner = pos(i + 1, j + 1, k + 1);
 
                     singleCube(data, edgeIds, normals, bound, &vertexMap, mesh,
-                        isoValue);
+                        uvInfo, isoValue);
                 }  // i
             }      // j
         }          // k
@@ -452,7 +507,7 @@ namespace jet {
                             (bndConnectivity & kDirectionBack)
                             ? &vertexMap
                             : &vertexMapBack,
-                            mesh, isoValue);
+                            mesh, uvInfo, isoValue);
                     }
 
                     k = dimz - 2;
@@ -482,7 +537,7 @@ namespace jet {
                             (bndConnectivity & kDirectionFront)
                             ? &vertexMap
                             : &vertexMapFront,
-                            mesh, isoValue);
+                            mesh, uvInfo, isoValue);
                     }
                 }  // i
             }      // j
@@ -529,7 +584,7 @@ namespace jet {
                             (bndConnectivity & kDirectionLeft)
                             ? &vertexMap
                             : &vertexMapLeft,
-                            mesh, isoValue);
+                            mesh, uvInfo,  isoValue);
                     }
 
                     i = dimx - 2;
@@ -559,7 +614,7 @@ namespace jet {
                             (bndConnectivity & kDirectionRight)
                             ? &vertexMap
                             : &vertexMapRight,
-                            mesh, isoValue);
+                            mesh, uvInfo, isoValue);
                     }
                 }  // j
             }      // k
@@ -606,7 +661,7 @@ namespace jet {
                             (bndConnectivity & kDirectionDown)
                             ? &vertexMap
                             : &vertexMapDown,
-                            mesh, isoValue);
+                            mesh, uvInfo, isoValue);
                     }
 
                     j = dimy - 2;
@@ -636,12 +691,13 @@ namespace jet {
                             (bndConnectivity & kDirectionUp)
                             ? &vertexMap
                             : &vertexMapUp,
-                            mesh, isoValue);
+                            mesh, uvInfo, isoValue);
                     }
                 }  // i
             }      // k
         }
     }
+
 
 
 }  // namespace jet

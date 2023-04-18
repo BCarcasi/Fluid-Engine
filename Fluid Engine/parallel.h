@@ -9,6 +9,11 @@
 #include <future>
 #include <vector>
 
+
+#define JET_TASKING_CPP11THREADS
+#define JET_TASKING_TBB
+
+
 #ifdef JET_TASKING_TBB
 #include <tbb/parallel_for.h>
 #include <tbb/parallel_reduce.h>
@@ -93,7 +98,6 @@ namespace jet {
         ExecutionPolicy policy = ExecutionPolicy::kParallel);
 
     // Sets maximum number of threads to use.
-    void setMaxNumberOfThreads(unsigned int numThreads);
 
     // Returns maximum number of threads to use.
     unsigned int maxNumberOfThreads();
@@ -107,25 +111,22 @@ namespace jet {
         template <typename TASK_T>
         inline void schedule(TASK_T&& fcn) {
 #ifdef JET_TASKING_TBB
-            struct LocalTBBTask : public tbb::task {
+            struct LocalTBBTask : public tbb::task_group {
                 TASK_T func;
-                tbb::task* execute() override {
-                    func();
-                    return nullptr;
-                }
+                tbb::task_group* execute() override { func(); return nullptr; }
                 LocalTBBTask(TASK_T&& f) : func(std::forward<TASK_T>(f)) {}
             };
 
-            auto* tbb_node = new (tbb::task::allocate_root())
+            auto* tbb_node = new (tbb::task_group::allocate_root())
                 LocalTBBTask(std::forward<TASK_T>(fcn));
-            tbb::task::enqueue(*tbb_node);
+            tbb::task_group::enqueue(*tbb_node);
 #elif defined(JET_TASKING_CPP11THREADS)
             std::thread thread(fcn);
             thread.detach();
 #else  // OpenMP or Serial --> synchronous!
             fcn();
 #endif
-        }
+        } 
 
         template <typename TASK_T>
         using operator_return_t = typename std::result_of<TASK_T()>::type;
@@ -258,7 +259,7 @@ namespace jet {
             }
         }
 
-#elif JET_TASKING_CPP11THREADS
+#elif defined(JET_TASKING_CPP11THREADS)
         // Estimate number of threads in the pool
         unsigned int numThreadsHint = maxNumberOfThreads();
         const unsigned int numThreads =
@@ -556,20 +557,10 @@ namespace jet {
             policy);
     }
 
-    void setMaxNumberOfThreads(unsigned int numThreads) {
-#if defined(JET_TASKING_TBB)
-        static std::unique_ptr<tbb::task_scheduler_init> tbbInit;
-        if (!tbbInit.get())
-            tbbInit.reset(new tbb::task_scheduler_init(numThreads));
-        else {
-            tbbInit->terminate();
-            tbbInit->initialize(numThreads);
-        }
-#elif defined(JET_TASKING_OPENMP)
-        omp_set_num_threads(numThreads);
-#endif
-        sMaxNumberOfThreads = std::max(numThreads, 1u);
-    }
+    
+    
+    
+    
 
     unsigned int maxNumberOfThreads() { return sMaxNumberOfThreads; }
 

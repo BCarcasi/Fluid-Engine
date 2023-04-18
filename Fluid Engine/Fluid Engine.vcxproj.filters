@@ -639,6 +639,63 @@
     <ClInclude Include="controls.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vboindexer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_generate_smoke.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_smoke_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_generate_hybrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="flip_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid_point_generator3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="particle_emitter_set3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="apic_solver3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_xyz2obj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="io_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="anisotropic_points_to_implicit3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matrix_mxn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="points_to_implicit3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zhu_bridson_points_to_implicit3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sph_points_to_implicit3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="spherical_points_to_implicit3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj_simplifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics.h">

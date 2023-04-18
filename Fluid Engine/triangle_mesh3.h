@@ -632,6 +632,7 @@ namespace jet {
             _points.append(tri.points[i]);
             _normals.append(tri.normals[i]);
             _uvs.append(tri.uvs[i]);
+            std::cout << tri.uvs[i] << std::endl;
             newPointIndices[i] = vStart + i;
             newNormalIndices[i] = nStart + i;
             newUvIndices[i] = tStart + i;
